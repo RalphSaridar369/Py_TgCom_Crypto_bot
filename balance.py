@@ -37,10 +37,23 @@ def ntek(update, context):
 	update.message.reply_text(arr[random.randint(0,3)])
 
 def luckyWinner(update, context):
-	bot = telegram.Bot(api_key)
-	print(bot)
-	choice = bot.getChatMemberCount(-1001775758804)
-	print(bot.getChatMember(chat_id,choice))
+	print(update.message["text"])
+	message = update.message["text"]
+	winnersLn = int(message.split(" ")[1])
+	users = message.split(" ")[2].split("-")
+	print("ln: ",len(users),type(users))
+	winners = "** Winners **\n\n"
+	for i,n in enumerate(range(winnersLn)):
+		choice = random.randint(0,len(users)-1)
+		print(choice)
+		winners += str(n+1) +" - "+ users[choice]+"\n"
+		users.pop(choice)
+
+	winners += "\n\n Congrats !! "
+	update.message.reply_text(winners)
+	#print(bot)
+	#choice = bot.getChatMemberCount(-1001775758804)
+	#print(bot.getChatMember(chat_id,choice))
 
 def help(update, context):
 	update.message.reply_text("""
