@@ -28,6 +28,28 @@ def joke(update, context):
 	joke = res["joke"]
 	update.message.reply_text(joke)
 
+def myWallet(update, context):
+
+	message = update.message["text"]
+	hex = message.split(" ")[1]
+
+	page = requests.get("https://api.bscscan.com/api?module=account&action=balance&address="+hex+"&apikey=T7YH7MHHQTPEB25EVTQH5Z7R5H1QK1KVXT")
+
+	res = page.json()
+	print("{:.18f}".format(float(res["result"])))
+	update.message.reply_text("**Your Balance:**\n"+str(float(res['result'])/math.pow(10,18))+" BNB")
+
+def yoda(update,context):
+
+	message = update.message["text"]
+	print("MESS: ",message)
+	text = message.split("_")[2]
+	page = requests.get("https://api.funtranslations.com/translate/yoda.json?text="+text)
+	res = page.json()
+	print("RES: ",res)
+	update.message.reply_text(res["contents"]["translated"])
+		
+
 def ntek(update, context):
 	#data = json.loads(update.message)
 	print(update.message.from_user.first_name)
@@ -61,6 +83,9 @@ def help(update, context):
 		/balance => Gives balance of community's wallet
 		/about => About Us
 		/coinflip => Head or Tails
+		/ntek => for ntek purposes
+		/joke => sends a Yo mama joke
+		/myWallet => sends your own wallet balance
 	""")
 
 def pumpit(update, context):
@@ -107,6 +132,8 @@ disp.add_handler(telegram.ext.CommandHandler("lucky",luckyWinner))
 disp.add_handler(telegram.ext.CommandHandler("pumpit",pumpit))
 disp.add_handler(telegram.ext.CommandHandler("joke",joke))
 disp.add_handler(telegram.ext.CommandHandler("ntek",ntek))
+disp.add_handler(telegram.ext.CommandHandler("myBalance",myWallet))
+disp.add_handler(telegram.ext.CommandHandler("yoda",yoda))
 
 updater.start_polling()
 updater.idle()
