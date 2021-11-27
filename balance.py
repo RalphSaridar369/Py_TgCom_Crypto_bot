@@ -1,6 +1,6 @@
 import requests
 import telegram.ext
-import telegram
+from telegram import *
 import json
 import math
 import random
@@ -19,6 +19,11 @@ print("Bot running in tg")
 
 def start(update, context):
 	update.message.reply_text("Hello! Welcome to Lebanese DeFi!")
+
+def badbot(update, context):
+	arr = ["Sorry :(","Won't happen again","My bad","Please don't hurt my family"]
+	update.message.reply_text(arr[random.randint(0,len(arr)-1)])
+
 
 def joke(update, context):
 	#page = requests.get("https://v2.jokeapi.dev/joke/Dark,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit",headers={"Accept":"application/json"})
@@ -43,7 +48,7 @@ def yoda(update,context):
 
 	message = update.message["text"]
 	print("MESS: ",message)
-	text = message.split("_")[2]
+	text = message.split("_")[1]
 	page = requests.get("https://api.funtranslations.com/translate/yoda.json?text="+text)
 	res = page.json()
 	print("RES: ",res)
@@ -119,9 +124,33 @@ def balance(update, context):
 def callback():
 	print("test")
 
+def giveaway(update, context):
+	message = update.message["text"]
+	print("MESSAGE: ",message)
+	giveawayName = message.split(" ")[1]
+	winnersLn = int(message.split(" ")[3])
+	participantsLn = int(message.split(" ")[2])
+	print("Test")
+	button = [[InlineKeyboardButton("Join",callback_data="join_giveaway")]]
+	context.bot.send_message(chat_id=update.effective_chat.id, text="Giveaway "+giveawayName+"\n\n\nNum of Participants: "+str(participantsLn)+"\nNum of Winners: "+str(winnersLn),
+	 reply_markup=InlineKeyboardMarkup(button))
+
+def MessageHandler(update, context):
+	message = update.message["text"]
+	if("Ass" in message or "ass" in message):
+		update.message.reply_text("Its ess for fuck's sake")
+
+def queryHandler(update, context):
+	query = update.callback_query.data
+	update.callback_query.answer()
+
+	# if "join_giveaway" in query:
+	# 	update.message.reply_text("Success")
+
+
+
 updater = telegram.ext.Updater(api_key,use_context=True)
 disp = updater.dispatcher
-
 disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("help",help))
 disp.add_handler(telegram.ext.CommandHandler("about",content))
@@ -134,6 +163,10 @@ disp.add_handler(telegram.ext.CommandHandler("joke",joke))
 disp.add_handler(telegram.ext.CommandHandler("ntek",ntek))
 disp.add_handler(telegram.ext.CommandHandler("myBalance",myWallet))
 disp.add_handler(telegram.ext.CommandHandler("yoda",yoda))
+disp.add_handler(telegram.ext.CommandHandler("badbot",badbot))
+disp.add_handler(telegram.ext.CommandHandler("give",giveaway))
+disp.add_handler(telegram.ext.MessageHandler(telegram.ext.filters.Filters.text, MessageHandler))
+disp.add_handler(telegram.ext.CallbackQueryHandler(queryHandler))
 
 updater.start_polling()
 updater.idle()
