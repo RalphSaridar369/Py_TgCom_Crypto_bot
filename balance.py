@@ -7,7 +7,10 @@ import os
 import random
 
 api_key = "2121277949:AAGnsnht0fJVh_zrsybJdpuc9TgJn6YOo5c"
-chat_id = -1001775758804
+api_key_dev = "5079399379:AAFjP1KBQd7CIrgS2Mt8QSOMZjPWmb6Ovdw"
+CHAT_ID = -1001775758804
+GIVEAWAY_ID = 0
+GIVEAWAY_RUNNING= False
 ADMINS = ["thebastardmak","cryptolima","watwatian","FaridFlintstone"]
 COIN_FLIP = ["Head","Tails"]
 WINNERS = 0
@@ -30,6 +33,43 @@ def start(update, context):
 def badbot(update, context):
 	arr = ["Sorry :(","Won't happen again","My bad","Please don't hurt my family"]
 	update.message.reply_text(arr[random.randint(0,len(arr)-1)])
+
+def whitelist(update, context):
+	sender = update.message.from_user.username
+	print("SENDER:"+sender)
+	if(sender not in ADMINS):
+		notAllowed(update,context)
+	else:
+		print(update.message.text)
+		all_options = update.message
+		option = all_options.text.split(" ")[1]
+		if(option=="add"):
+			data = all_options.text.split(" ")[2].split("-")
+			print("data",data)
+			f = open("whitelist.txt","a")
+			for i in data:
+				f.write(i+"\n")
+			f.close()
+			update.message.reply_text("Successfully added")
+		elif(option=="read"):
+			f = open("Whitelist.txt","r")
+			lines = f.readlines()
+			try:
+				while True:
+					lines.remove("\n")
+			except ValueError:
+				pass
+			message = "Giveaways: \n\n"
+			for i in lines:
+				message+=i
+			update.message.reply_text(message)
+		elif(option=="remove"):
+			f = open("whitelist.txt","w")
+			f.write("")
+			f.close()
+			update.message.reply_text("Successfully Removed")
+		else:
+			update.message.reply_text("Please choose either: add, read or remove")
 
 
 def joke(update, context):
@@ -98,7 +138,14 @@ def help(update, context):
 		/coinflip => Head or Tails
 		/ntek => for ntek purposes
 		/joke => sends a Yo mama joke
-		/myWallet => sends your own wallet balance
+		/myWallet + hash => sends your own wallet balance
+		/pumpit => to pump it up
+		/badbot => slap the bot
+		/whitelist + add etc1-etc2 => adds etc1 and etc2 to the list 
+		/whitelist + read => reads whitelist list 
+		/whitelist + remove => removes from the list 
+		/give name 2 => creates a giveaway with num of winners = 2
+		/givestop => stops current giveaway
 	""")
 
 def pumpit(update, context):
@@ -132,12 +179,23 @@ def callback():
 	print("test")
 
 def giveaway(update, context):
+	global GIVEAWAY_RUNNING
+	global ALLOWED_TO_JOIN
+
+	print("TEST")
+	print(GIVEAWAY_RUNNING)
 	sender = update.message.from_user.username
 	print("SENDER:"+sender)
 	if(sender not in ADMINS):
 		notAllowed(update,context)
+	elif(GIVEAWAY_RUNNING==True):
+		print("yes")
+		update.message.reply_text("Please run slash stopgive before starting a new giveaway")
 	else:
 		global WINNERS
+		global ALLOWED_TO_JOIN
+		GIVEAWAY_RUNNING = True
+		ALLOWED_TO_JOIN = True
 		message = update.message["text"]
 		#print("MESSAGE: ",message)
 		giveawayName = message.split(" ")[1]
@@ -146,7 +204,7 @@ def giveaway(update, context):
 		#participantsLn = int(message.split(" ")[2])
 		#print("Test")
 		button = [[InlineKeyboardButton("Join",callback_data="join_giveaway"+"-"+update.message.from_user.first_name+"")]]
-		context.bot.send_message(chat_id=update.effective_chat.id, text="Giveaway "+giveawayName+"\n\n\nNumber of Winners: "+str(winnersLn),
+		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Giveaway "+giveawayName+"\n\n\nNumber of Winners: "+str(winnersLn),
 		reply_markup=InlineKeyboardMarkup(button))
 
 def MessageHandler(update, context):
@@ -155,13 +213,21 @@ def MessageHandler(update, context):
 		update.message.reply_text("Its ess for fuck's sake")
 
 def stopGiveaway(update, context):
+	
 	sender = update.message.from_user.username
 	print("SENDER:"+sender)
 	if(sender not in ADMINS):
 		notAllowed(update,context)
 	else:
-
-		global WINNERS
+		global ALLOWED_TO_JOIN
+		global WINNERS 
+		global CHAT_ID
+		global GIVEAWAY_RUNNING
+		GIVEAWAY_RUNNING=False
+		ALLOWED_TO_JOIN=False
+		
+		# context.bot.deleteMessage (message_id = must_delete.message_id,
+        # chat_id = CHAT_ID)
 		f = open("giveaway.txt", "r")
 		participants=[]
 		for i in f.readlines():
@@ -182,8 +248,9 @@ def stopGiveaway(update, context):
 		else:
 			winners=""
 			for i in range(WINNERS):
-				choice = random.randint(0,participants.len())
+				choice = random.randint(0,len(participants)-1)
 				winners+=participants[choice]
+				participants.remove(participants[choice])
 			update.message.reply_text("Congrats:\n\n"+winners)
 			
 		f.close()
@@ -191,22 +258,24 @@ def stopGiveaway(update, context):
 		f.write("participants:\n")
 
 def queryHandler(update, context):
-	user = update.callback_query.from_user.username
-	query = update.callback_query.data.split("-")
-	update.callback_query.answer()
-	if "join_giveaway" in query[0]:
-		print(user)
-		f = open("giveaway.txt","r")
-		lines = f.readlines()
-		if("@"+user not in lines):
-			fi = open("giveaway.txt", "a")
-			fi.write("\n@"+user)
-			fi.close()
+	global ALLOWED_TO_JOIN
+	if(ALLOWED_TO_JOIN):
+		user = update.callback_query.from_user.username
+		query = update.callback_query.data.split("-")
+		update.callback_query.answer()
+		if "join_giveaway" in query[0]:
+			print(user)
+			f = open("giveaway.txt","r")
+			lines = f.readlines()
+			if("@"+user not in lines):
+				fi = open("giveaway.txt", "a")
+				fi.write("\n@"+user)
+				fi.close()
 	# 	update.message.reply_text("Success")
 
 
 
-updater = telegram.ext.Updater(api_key,use_context=True)
+updater = telegram.ext.Updater(api_key_dev,use_context=True)
 disp = updater.dispatcher
 disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("help",help))
@@ -223,6 +292,7 @@ disp.add_handler(telegram.ext.CommandHandler("yoda",yoda))
 disp.add_handler(telegram.ext.CommandHandler("badbot",badbot))
 disp.add_handler(telegram.ext.CommandHandler("give",giveaway))
 disp.add_handler(telegram.ext.CommandHandler("stopgive",stopGiveaway))
+disp.add_handler(telegram.ext.CommandHandler("whitelist",whitelist))
 disp.add_handler(telegram.ext.MessageHandler(telegram.ext.filters.Filters.text, MessageHandler))
 disp.add_handler(telegram.ext.CallbackQueryHandler(queryHandler))
 
