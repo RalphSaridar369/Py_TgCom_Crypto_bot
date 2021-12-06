@@ -2,8 +2,8 @@ import requests
 import telegram.ext
 from telegram import *
 from datetime import date
-import shelve
 import random
+import shelve
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
 HELP = """
@@ -29,7 +29,7 @@ CALENDAR = ShelfFile['calendar']
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 GIVEAWAY_RUNNING= False
-ADMINS = ["thebastardmak","cryptolima","watwatian","FaridFlintstone"]
+ADMINS = ["thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
 COIN_FLIP = ["Head","Tails"]
 WINNERS = 0
 ABOUT_US_MESSAGE = """** Lebanese DeFi **\n\nWelcome to the group
@@ -284,7 +284,6 @@ def calendar(update, context):
 			data = update.message.text.split("=")[1]
 			CALENDAR[today_date] = data
 			ShelfFile['calendar'][today_date] = CALENDAR[today_date]
-			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option == "read"):
 			print(123)
