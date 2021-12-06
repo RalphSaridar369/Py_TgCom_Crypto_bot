@@ -23,7 +23,7 @@ HELP = """
 		/cal today = data => sets whitelist calendar for a specific date
 		/cal read = 06/12 => gets all whitelists on a specific date
 	"""
-CALENDAR = {}
+CALENDAR = ShelfFile[calendar]
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 GIVEAWAY_RUNNING= False
