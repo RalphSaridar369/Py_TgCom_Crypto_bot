@@ -2,7 +2,7 @@ import requests
 import telegram.ext
 from telegram import *
 from datetime import date
-
+import shelve
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
 HELP = """
