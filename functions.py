@@ -4,6 +4,7 @@ from telegram import *
 from datetime import date
 
 #GLOBAL VARIABLES
+ShelfFile = shelve.open('shelf')
 HELP = """
 		The following commands are available:
 		/balance => Gives balance of community's wallet
@@ -280,6 +281,8 @@ def calendar(update, context):
 			today_date = date.today().strftime("%d/%m")
 			data = update.message.text.split("=")[1]
 			CALENDAR[today_date] = data
+			ShelfFile[calendar] = CALENDAR
+			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option == "read"):
 			print(123)
