@@ -6,6 +6,7 @@ import random
 import shelve
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
+ShelfFile['calendar']={}
 CALENDAR = ShelfFile['calendar']
 ShelfFile.close()
 HELP = """
@@ -24,7 +25,7 @@ HELP = """
 		/give name 2 => creates a giveaway with num of winners = 2
 		/givestop => stops current giveaway
 		/cal today = data => sets whitelist calendar for a specific date
-		/cal read = 06/12 => gets all whitelists on a specific date
+		/cal read = dd/mm => gets all whitelists on a specific date
 	"""
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
@@ -63,11 +64,11 @@ def whitelist(update, context):
 		option = all_options.text.split(" ")[1]
 		if(option=="add"):
 			message = all_options.text.split("=")[1][1::]
-			data = message.split("-")
-			print("data",data)
+			#data = message.split("-")
+			#print("data",data)
 			f = open("whitelist.txt","a")
-			for i in data:
-				f.write(i+"\n")
+			#for i in data:
+			f.write(i+"\n")
 			f.close()
 			update.message.reply_text("Successfully added")
 		elif(option=="read"):
@@ -277,9 +278,11 @@ def calendar(update, context):
 		global CALENDAR
 		all_options = update.message
 		option = all_options.text.split(" ")[1]
-		print(option)
-		if(option == "today"):
-			print(456)
+		if(option ==""):
+			today_date = date.today().strftime("%d/%m")
+			data = update.message.text.split("=")[1][1::]
+			update.message.reply_text(CALENDAR[data])
+		elif(option == "today"):
 			today_date = date.today().strftime("%d/%m")
 			data = update.message.text.split("=")[1]
 			ShelfFile = shelve.open('shelf')
@@ -288,15 +291,37 @@ def calendar(update, context):
 			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option == "read"):
-			print(123)
-			data = update.message.text.split("=")[1][1::]
-			print(data)
-			update.message.reply_text(CALENDAR[data])
+			if("=" in update.message.text):
+				data = update.message.text.split("=")[1][1::]
+				update.message.reply_text(CALENDAR[data])
+			else:
+				today_date = date.today().strftime("%d/%m")
+				update.message.reply_text("TODAY: "+CALENDAR[today_date])
 
 def joke(update, context):
+	data = ["Omak 3andi","I know your momma and, she knows me. You better believe it.","اعرف اين امك ايها الحقير"]
+	choice = random.randint(0,1)
+	if(choice==0):
+		jokeChoice = random.randint(0,2)
+		update.message.reply_text(data[jokeChoice])
+	else: 
 	#page = requests.get("https://v2.jokeapi.dev/joke/Dark,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit",headers={"Accept":"application/json"})
-	page = requests.get("https://api.yomomma.info/",headers={"Accept":"application/json"})
-	res= page.json()
-	#joke = res["setup"]+" "+res["delivery"]
-	joke = res["joke"]
-	update.message.reply_text(joke)
+		page = requests.get("https://api.yomomma.info/",headers={"Accept":"application/json"})
+		res= page.json()
+		#joke = res["setup"]+" "+res["delivery"]
+		joke = res["joke"]
+		update.message.reply_text(joke)
+
+def adminpanel(update,context):
+		button = [
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],
+		[InlineKeyboardButton("Join",callback_data="test")],]
+		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Admin Panel",
+		reply_markup=InlineKeyboardMarkup(button))
