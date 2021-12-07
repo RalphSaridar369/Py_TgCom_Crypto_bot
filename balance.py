@@ -6,6 +6,7 @@ import json
 import math
 import os
 import random
+import shelve
 
 api_key = "2121277949:AAGnsnht0fJVh_zrsybJdpuc9TgJn6YOo5c"
 api_key_dev = "5079399379:AAFjP1KBQd7CIrgS2Mt8QSOMZjPWmb6Ovdw"

@@ -6,6 +6,8 @@ import random
 import shelve
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
+CALENDAR = ShelfFile['calendar']
+ShelfFile.close()
 HELP = """
 		The following commands are available:
 		/balance => Gives balance of community's wallet
@@ -24,8 +26,6 @@ HELP = """
 		/cal today = data => sets whitelist calendar for a specific date
 		/cal read = 06/12 => gets all whitelists on a specific date
 	"""
-ShelfFile['calendar']['00/00'] = 'blank'
-CALENDAR = ShelfFile['calendar']
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 GIVEAWAY_RUNNING= False
@@ -282,8 +282,10 @@ def calendar(update, context):
 			print(456)
 			today_date = date.today().strftime("%d/%m")
 			data = update.message.text.split("=")[1]
+			ShelfFile = shelve.open('shelf')
 			CALENDAR[today_date] = data
 			ShelfFile['calendar'][today_date] = CALENDAR[today_date]
+			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option == "read"):
 			print(123)
