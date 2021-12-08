@@ -8,6 +8,7 @@ import shelve
 ShelfFile = shelve.open('shelf')
 ShelfFile['calendar']={}
 CALENDAR = ShelfFile['calendar']
+TODAY_WL = ""
 ShelfFile.close()
 HELP = """
 		The following commands are available:
@@ -24,13 +25,14 @@ HELP = """
 		/wl remove => removes from the list 
 		/give name 2 => creates a giveaway with num of winners = 2
 		/givestop => stops current giveaway
-		/cal today = data => sets whitelist calendar for a specific date
-		/cal read = dd/mm => gets all whitelists on a specific date
+		/cal = dd/mm => gets all whitelists on a specific date
+		/cal => gets today's whitelists
 	"""
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 GIVEAWAY_RUNNING= False
 ADMINS = ["thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
+SUPER_ADMIN = ["cryptolima"]
 COIN_FLIP = ["Head","Tails"]
 WINNERS = 0
 ABOUT_US_MESSAGE = """** Lebanese DeFi **\n\nWelcome to the group
@@ -42,6 +44,7 @@ La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 From token whitelists to presales  to launch dates to even NFTs"""
 
 #FUNCTIONS
+
 def notAllowed(update,context):
 	message = ["Not allowed habibo","Enssss","Jareba ba3ed marra barken btezbat"]
 	update.message.reply_text(message[random.randint(0,len(message)-1)])
@@ -262,9 +265,23 @@ def queryHandler(update, context):
 	# 	update.message.reply_text("Success")
 
 def MessageHandler(update, context):
+	global CALENDAR
+	global ADMINS
+	sender = update.message.from_user.username
 	message = update.message["text"]
 	if("Ass" in message or "ass" in message):
 		update.message.reply_text("Its ess for fuck's sake")
+	elif("🔱 TOKEN CALANDER" in message ):
+		# here it should be shelf
+		print("Should add the list")
+		print(message)
+		today_date = date.today().strftime("%d/%m")
+		ShelfFile = shelve.open('shelf')
+		#add the shelf here
+		CALENDAR[today_date] = message
+		ShelfFile['calendar'][today_date] = CALENDAR[today_date]
+		ShelfFile.close()
+		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
 
 def help(update, context):
 	update.message.reply_text(HELP)
@@ -272,31 +289,30 @@ def help(update, context):
 def calendar(update, context):
 	
 	sender = update.message.from_user.username
-	if(sender not in ADMINS):
-		notAllowed(update,context)
+	# if(sender not in ADMINS):
+	# 	notAllowed(update,context)
+	#else:
+	global CALENDAR
+	#all_options = update.message
+	#option = all_options.text.split(" ")[1]
+	# if(option ==""):
+	# 	today_date = date.today().strftime("%d/%m")
+	# 	data = update.message.text.split("=")[1][1::]
+	# 	update.message.reply_text(CALENDAR[data])
+	# elif(option == "today"):
+	# 	today_date = date.today().strftime("%d/%m")
+	# 	data = update.message.text.split("=")[1]
+	# 	ShelfFile = shelve.open('shelf')
+	# 	CALENDAR[today_date] = data
+	# 	ShelfFile['calendar'][today_date] = CALENDAR[today_date]
+	# 	ShelfFile.close()
+	#   update.message.reply_text("Successfully added")
+	if("=" in update.message.text):
+		data = update.message.text.split("=")[1][1::]
+		update.message.reply_text("**("+data+"): **\n\n\n"+CALENDAR[data])
 	else:
-		global CALENDAR
-		all_options = update.message
-		option = all_options.text.split(" ")[1]
-		if(option ==""):
-			today_date = date.today().strftime("%d/%m")
-			data = update.message.text.split("=")[1][1::]
-			update.message.reply_text(CALENDAR[data])
-		elif(option == "today"):
-			today_date = date.today().strftime("%d/%m")
-			data = update.message.text.split("=")[1]
-			ShelfFile = shelve.open('shelf')
-			CALENDAR[today_date] = data
-			ShelfFile['calendar'][today_date] = CALENDAR[today_date]
-			ShelfFile.close()
-			update.message.reply_text("Successfully added")
-		elif(option == "read"):
-			if("=" in update.message.text):
-				data = update.message.text.split("=")[1][1::]
-				update.message.reply_text(CALENDAR[data])
-			else:
-				today_date = date.today().strftime("%d/%m")
-				update.message.reply_text("TODAY: "+CALENDAR[today_date])
+		today_date = date.today().strftime("%d/%m")
+		update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
 
 def joke(update, context):
 	data = ["Omak 3andi","I know your momma and, she knows me. You better believe it.","اعرف اين امك ايها الحقير"]
@@ -305,10 +321,8 @@ def joke(update, context):
 		jokeChoice = random.randint(0,2)
 		update.message.reply_text(data[jokeChoice])
 	else: 
-	#page = requests.get("https://v2.jokeapi.dev/joke/Dark,Pun?blacklistFlags=nsfw,religious,political,racist,sexist,explicit",headers={"Accept":"application/json"})
 		page = requests.get("https://api.yomomma.info/",headers={"Accept":"application/json"})
 		res= page.json()
-		#joke = res["setup"]+" "+res["delivery"]
 		joke = res["joke"]
 		update.message.reply_text(joke)
 
