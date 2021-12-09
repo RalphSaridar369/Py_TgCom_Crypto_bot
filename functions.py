@@ -65,27 +65,26 @@ def whitelist(update, context):
 			message = all_options.text.split("=")[1][1::]
 			data = message.split("-")
 			print("data",data)
-			f = open("whitelist.txt","a")
+			ShelfFile = shelve.open('shelf')
 			for i in data:
-				f.write(i+"\n")
-			f.close()
+				ShelfFile['whitelist'] += str(i) + '\n'
+			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option=="read"):
-			f = open("whitelist.txt","r")
-			lines = f.readlines()
-			try:
-				while True:
-					lines.remove("\n")
-			except ValueError:
-				pass
+			ShelfFile = shelve.open('shelf')
+			lines = ShelfFile['whitelist']
+			#try:
+			#	lines = lines.replace('\n', '')
+			#except ValueError:
+			#	pass
+			print('test')
 			message = "Whitelists: \n\n"
-			for i in lines:
-				message+=i
+			message += lines
 			update.message.reply_text(message)
 		elif(option=="remove"):
-			f = open("whitelist.txt","w")
-			f.write("")
-			f.close()
+			ShelfFile = shelve.open('shelf')
+			ShelfFile['whitelist'] = ''
+			ShelfFile.close()
 			update.message.reply_text("Successfully Removed")
 		else:
 			update.message.reply_text("Please choose either: add, read or remove")
