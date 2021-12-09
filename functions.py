@@ -6,9 +6,7 @@ import random
 import shelve
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
-ShelfFile['calendar']={}
 CALENDAR = ShelfFile['calendar']
-TODAY_WL = ""
 ShelfFile.close()
 HELP = """
 		The following commands are available:
@@ -44,7 +42,6 @@ La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 From token whitelists to presales  to launch dates to even NFTs"""
 
 #FUNCTIONS
-
 def notAllowed(update,context):
 	message = ["Not allowed habibo","Enssss","Jareba ba3ed marra barken btezbat"]
 	update.message.reply_text(message[random.randint(0,len(message)-1)])
@@ -67,29 +64,28 @@ def whitelist(update, context):
 		option = all_options.text.split(" ")[1]
 		if(option=="add"):
 			message = all_options.text.split("=")[1][1::]
-			#data = message.split("-")
-			#print("data",data)
-			f = open("whitelist.txt","a")
-			#for i in data:
-			f.write(i+"\n")
-			f.close()
+			data = message.split("-")
+			print("data",data)
+			ShelfFile = shelve.open('shelf')
+			for i in data:
+				ShelfFile['whitelist'] += str(i) + '\n'
+			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option=="read"):
-			f = open("whitelist.txt","r")
-			lines = f.readlines()
-			try:
-				while True:
-					lines.remove("\n")
-			except ValueError:
-				pass
+			ShelfFile = shelve.open('shelf')
+			lines = ShelfFile['whitelist']
+			#try:
+			#	lines = lines.replace('\n', '')
+			#except ValueError:
+			#	pass
+			print('test')
 			message = "Whitelists: \n\n"
-			for i in lines:
-				message+=i
+			message += lines
 			update.message.reply_text(message)
 		elif(option=="remove"):
-			f = open("whitelist.txt","w")
-			f.write("")
-			f.close()
+			ShelfFile = shelve.open('shelf')
+			ShelfFile['whitelist'] = ''
+			ShelfFile.close()
 			update.message.reply_text("Successfully Removed")
 		else:
 			update.message.reply_text("Please choose either: add, read or remove")
