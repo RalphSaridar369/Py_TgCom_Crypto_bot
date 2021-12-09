@@ -262,6 +262,8 @@ def queryHandler(update, context):
 				fi = open("giveaway.txt", "a")
 				fi.write("\n@"+user)
 				fi.close()
+		if "Today's Calendar" in query[0]:
+			print("Running")
 	# 	update.message.reply_text("Success")
 
 def MessageHandler(update, context):
@@ -327,15 +329,26 @@ def joke(update, context):
 		update.message.reply_text(joke)
 
 def adminpanel(update,context):
-		button = [
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],
-		[InlineKeyboardButton("Join",callback_data="test")],]
-		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Admin Panel",
-		reply_markup=InlineKeyboardMarkup(button))
+		# button = [
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],
+		# [InlineKeyboardButton("Join",callback_data="test")],]
+		# sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Admin Panel",
+		# reply_markup=InlineKeyboardMarkup(button))
+		"""
+		Start function. Displayed whenever the /start command is called.
+		This function sets the language of the bot.
+		"""
+		# Create buttons to slect language:
+		keyboard = [["Today's Calendar", "Whitelists"]]
+
+		# Create initial message:
+		message = "Please choose one of the options below"
+		reply_markup = ReplyKeyboardMarkup(keyboard,one_time_keyboard=False,resize_keyboard=True)
+		update.message.reply_text(message, reply_markup=reply_markup)
