@@ -25,7 +25,7 @@ HELP = """
 		/givestop => stops current giveaway
 		/cal = dd/mm => gets all whitelists on a specific date
 		/cal => gets today's whitelists
-		/meme
+		/meme => sends a meme
 	"""
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
