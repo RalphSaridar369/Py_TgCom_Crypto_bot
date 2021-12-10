@@ -25,6 +25,7 @@ HELP = """
 		/givestop => stops current giveaway
 		/cal = dd/mm => gets all whitelists on a specific date
 		/cal => gets today's whitelists
+		/meme
 	"""
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
@@ -48,6 +49,12 @@ def notAllowed(update,context):
 
 def start(update, context):
 	update.message.reply_text("Hello! Welcome to Lebanese DeFi!")
+
+def meme(update,context):
+	chatid = update['message']['chat']['id']
+	page = requests.get("https://meme-api.herokuapp.com/gimme")
+	res = page.json()
+	context.bot.sendPhoto(chat_id=chatid, photo=res['url'], caption=res['title'])
 
 def badbot(update, context):
 	arr = ["Sorry :(","Won't happen again","My bad","Please don't hurt my family"]
@@ -248,6 +255,7 @@ def queryHandler(update, context):
 	global ALLOWED_TO_JOIN
 	if(ALLOWED_TO_JOIN):
 		user = update.callback_query.from_user.username
+		print("DATA: "+update.callback_query.data)
 		query = update.callback_query.data.split("-")
 		update.callback_query.answer()
 		if "join_giveaway" in query[0]:
@@ -258,7 +266,7 @@ def queryHandler(update, context):
 				fi = open("giveaway.txt", "a")
 				fi.write("\n@"+user)
 				fi.close()
-		if "Today's Calendar" in query[0]:
+		if "today_calendar" in query[0]:
 			print("Running")
 	# 	update.message.reply_text("Success")
 
@@ -342,7 +350,7 @@ def adminpanel(update,context):
 		This function sets the language of the bot.
 		"""
 		# Create buttons to slect language:
-		keyboard = [["Today's Calendar", "Whitelists"]]
+		keyboard = [[KeyboardButton("/cal",callback_data="today_calendar"),KeyboardButton("/wl read",callback_data="whitelists")]]
 
 		# Create initial message:
 		message = "Please choose one of the options below"

@@ -32,6 +32,7 @@ disp.add_handler(telegram.ext.CommandHandler("stopgive",stopGiveaway))
 disp.add_handler(telegram.ext.CommandHandler("wl",whitelist))
 disp.add_handler(telegram.ext.CommandHandler("cal",calendar))
 disp.add_handler(telegram.ext.CommandHandler("adminpanel",adminpanel))
+disp.add_handler(telegram.ext.CommandHandler("meme",meme))
 disp.add_handler(telegram.ext.MessageHandler(telegram.ext.filters.Filters.text, MessageHandler))
 disp.add_handler(telegram.ext.CallbackQueryHandler(queryHandler))
 
