@@ -120,6 +120,10 @@ def yoda(update,context):
 	print("RES: ",res)
 	update.message.reply_text(res["contents"]["translated"])
 		
+def getTodayCalendar(update,context):
+	today_date = date.today().strftime("%d/%m")
+	update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
+
 def ntek(update, context):
 	#data = json.loads(update.message)
 	print(update.message.from_user.first_name)
@@ -251,6 +255,19 @@ def stopGiveaway(update, context):
 		f  = open("giveaway.txt", "w")
 		f.write("participants:\n")
 
+def InlineQueryHandler(update, context):
+	print(update)
+	print(update["inline_query"]["query"])
+	query = update["inline_query"]["query"]
+	if(query=="Cal"):
+		chat_id = update['inline_query']["from_user"]["id"]
+		print("CHAT ID : "+str(chat_id))
+		# update.message.reply_text("TEst")
+		# context.bot.send_message(chat_id=chat_id,text="Hey")
+		today_date = date.today().strftime("%d/%m")
+		context.bot.send_message(chat_id=chat_id,text="**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
+
+
 def queryHandler(update, context):
 	global ALLOWED_TO_JOIN
 	if(ALLOWED_TO_JOIN):
@@ -266,9 +283,6 @@ def queryHandler(update, context):
 				fi = open("giveaway.txt", "a")
 				fi.write("\n@"+user)
 				fi.close()
-		if "today_calendar" in query[0]:
-			print("Running")
-	# 	update.message.reply_text("Success")
 
 def MessageHandler(update, context):
 	global CALENDAR
@@ -317,8 +331,9 @@ def calendar(update, context):
 		data = update.message.text.split("=")[1][1::]
 		update.message.reply_text("**("+data+"): **\n\n\n"+CALENDAR[data])
 	else:
-		today_date = date.today().strftime("%d/%m")
-		update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
+		getTodayCalendar(update, context)
+		# today_date = date.today().strftime("%d/%m")
+		# update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
 
 def joke(update, context):
 	data = ["Omak 3andi","I know your momma and, she knows me. You better believe it.","اعرف اين امك ايها الحقير"]
