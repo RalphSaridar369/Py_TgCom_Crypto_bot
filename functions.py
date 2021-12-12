@@ -2,8 +2,12 @@ import requests
 import telegram.ext
 from telegram import *
 from datetime import date
+import math
 import random
 import shelve
+from uuid import uuid4
+from telegram.utils.helpers import escape_markdown
+
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
 CALENDAR = ShelfFile['calendar']
@@ -61,6 +65,17 @@ def badbot(update, context):
 	update.message.reply_text(arr[random.randint(0,len(arr)-1)])
 
 def whitelist(update, context):
+	def readToday(update,context):
+		ShelfFile = shelve.open('shelf')
+		lines = ShelfFile['whitelist']
+		#try:
+		#	lines = lines.replace('\n', '')
+		#except ValueError:
+		#	pass
+		print('test')
+		message = "Whitelists: \n\n"
+		message += lines
+		update.message.reply_text(message)
 	sender = update.message.from_user.username
 	print("SENDER:"+sender)
 	if(sender not in ADMINS):
@@ -68,8 +83,14 @@ def whitelist(update, context):
 	else:
 		print(update.message.text)
 		all_options = update.message
-		option = all_options.text.split(" ")[1]
-		if(option=="add"):
+		option=[]
+		try:
+			option = all_options.text.split(" ")[1]
+		except:
+			pass
+		if(len(option)<1):
+			readToday(update,context)
+		elif(option=="add"):
 			message = all_options.text.split("=")[1][1::]
 			data = message.split("-")
 			print("data",data)
@@ -79,16 +100,17 @@ def whitelist(update, context):
 			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option=="read"):
-			ShelfFile = shelve.open('shelf')
-			lines = ShelfFile['whitelist']
-			#try:
-			#	lines = lines.replace('\n', '')
-			#except ValueError:
-			#	pass
-			print('test')
-			message = "Whitelists: \n\n"
-			message += lines
-			update.message.reply_text(message)
+			readToday(update,context)
+			# ShelfFile = shelve.open('shelf')
+			# lines = ShelfFile['whitelist']
+			# #try:
+			# #	lines = lines.replace('\n', '')
+			# #except ValueError:
+			# #	pass
+			# print('test')
+			# message = "Whitelists: \n\n"
+			# message += lines
+			# update.message.reply_text(message)
 		elif(option=="remove"):
 			ShelfFile = shelve.open('shelf')
 			ShelfFile['whitelist'] = ''
@@ -120,9 +142,19 @@ def yoda(update,context):
 	print("RES: ",res)
 	update.message.reply_text(res["contents"]["translated"])
 		
-def getTodayCalendar(update,context):
+def getTodayCalendar(update,context,typeM):
+	print("Getting calendar")
 	today_date = date.today().strftime("%d/%m")
-	update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
+	result=""
+	try:
+		result = CALENDAR[today_date]
+	except:
+		result = "You haven't inserted any calendar yet"
+		print("Error")
+	if(typeM=="update"):
+		update.message.reply_text(result)
+	else:
+		return result
 
 def ntek(update, context):
 	#data = json.loads(update.message)
@@ -256,16 +288,39 @@ def stopGiveaway(update, context):
 		f.write("participants:\n")
 
 def InlineQueryHandler(update, context):
-	print(update)
-	print(update["inline_query"]["query"])
-	query = update["inline_query"]["query"]
-	if(query=="Cal"):
-		chat_id = update['inline_query']["from_user"]["id"]
-		print("CHAT ID : "+str(chat_id))
-		# update.message.reply_text("TEst")
-		# context.bot.send_message(chat_id=chat_id,text="Hey")
-		today_date = date.today().strftime("%d/%m")
-		context.bot.send_message(chat_id=chat_id,text="**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
+	
+    """Handle the inline query."""
+    query = update.inline_query.query
+	# calendar = getTodayCalendar(update,context,"context")
+    if query == "":
+        return
+
+    results = [
+        InlineQueryResultArticle(
+            id=str(uuid4()),
+            title="Whitelist",
+            input_message_content=InputTextMessageContent("/wl@BscFetcherBot"),
+        ),
+        InlineQueryResultArticle(
+            id=str(uuid4()),
+            title="Calendar",
+            input_message_content=InputTextMessageContent("/cal@BscFetcherBot"),
+        ),
+    ]
+
+    update.inline_query.answer(results)
+	# context.bot.answer_inline_query(results="test")
+	# print(update)
+	# print(update["inline_query"]["query"])
+	# query = update["inline_query"]["query"]
+	# if(query=="Cal"):
+	# 	# update.inline_query.answer("test")
+	# 	chat_id = update['inline_query']["from_user"]["id"]
+	# 	print("CHAT ID : "+str(chat_id))
+	# 	# update.message.reply_text("TEst")
+	# 	# context.bot.send_message(chat_id=chat_id,text="Hey")
+	# 	today_date = date.today().strftime("%d/%m")
+	# 	context.bot.send_message(chat_id=chat_id,text="**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
 
 
 def queryHandler(update, context):
@@ -331,7 +386,8 @@ def calendar(update, context):
 		data = update.message.text.split("=")[1][1::]
 		update.message.reply_text("**("+data+"): **\n\n\n"+CALENDAR[data])
 	else:
-		getTodayCalendar(update, context)
+		print("in")
+		getTodayCalendar(update, context,"update")
 		# today_date = date.today().strftime("%d/%m")
 		# update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
 
