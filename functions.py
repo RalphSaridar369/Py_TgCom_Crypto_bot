@@ -7,6 +7,7 @@ import random
 import shelve
 from uuid import uuid4
 from telegram.utils.helpers import escape_markdown
+from uuid import uuid4
 
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
@@ -52,7 +53,7 @@ def notAllowed(update,context):
 	update.message.reply_text(message[random.randint(0,len(message)-1)])
 
 def start(update, context):
-	update.message.reply_text("Hello! Welcome to Lebanese DeFi!")
+	update.message.reply_text("Hello! Welcome to Lebanese DeFi! Let's make some bucks baby...")
 
 def meme(update,context):
 	chatid = update['message']['chat']['id']
@@ -65,17 +66,7 @@ def badbot(update, context):
 	update.message.reply_text(arr[random.randint(0,len(arr)-1)])
 
 def whitelist(update, context):
-	def readToday(update,context):
-		ShelfFile = shelve.open('shelf')
-		lines = ShelfFile['whitelist']
-		#try:
-		#	lines = lines.replace('\n', '')
-		#except ValueError:
-		#	pass
-		print('test')
-		message = "Whitelists: \n\n"
-		message += lines
-		update.message.reply_text(message)
+	
 	sender = update.message.from_user.username
 	print("SENDER:"+sender)
 	if(sender not in ADMINS):
@@ -89,7 +80,7 @@ def whitelist(update, context):
 		except:
 			pass
 		if(len(option)<1):
-			readToday(update,context)
+			readToday(update,context,"normal")
 		elif(option=="add"):
 			message = all_options.text.split("=")[1][1::]
 			data = message.split("-")
@@ -100,7 +91,7 @@ def whitelist(update, context):
 			ShelfFile.close()
 			update.message.reply_text("Successfully added")
 		elif(option=="read"):
-			readToday(update,context)
+			readToday(update,context,"normal")
 			# ShelfFile = shelve.open('shelf')
 			# lines = ShelfFile['whitelist']
 			# #try:
@@ -141,12 +132,28 @@ def yoda(update,context):
 	res = page.json()
 	print("RES: ",res)
 	update.message.reply_text(res["contents"]["translated"])
-		
+
+def readToday(update,context,typeM):
+		ShelfFile = shelve.open('shelf')
+		lines = ShelfFile['whitelist']
+		#try:
+		#	lines = lines.replace('\n', '')
+		#except ValueError:
+		#	pass
+		message = "Whitelists: \n\n"
+		message += lines
+		if(typeM == "normal"):
+			update.message.reply_text(message)
+		else:
+			return message
+
 def getTodayCalendar(update,context,typeM):
+	global CALENDAR
 	print("Getting calendar")
 	today_date = date.today().strftime("%d/%m")
 	result=""
 	try:
+		print(CALENDAR[today_date])
 		result = CALENDAR[today_date]
 	except:
 		result = "You haven't inserted any calendar yet"
@@ -211,7 +218,7 @@ def balance(update, context):
 	update.message.reply_text("**Community Balance:**\n"+str("{0:.2f}".format(float(res['result'])/math.pow(10,18)))+" BNB")
 
 def callback():
-	print("test")
+	print("callback")
 
 def giveaway(update, context):
 	global GIVEAWAY_RUNNING
@@ -257,7 +264,7 @@ def stopGiveaway(update, context):
 		ALLOWED_TO_JOIN=False
 		
 		# context.bot.deleteMessage (message_id = must_delete.message_id,
-        # chat_id = CHAT_ID)
+		# chat_id = CHAT_ID)
 		f = open("giveaway.txt", "r")
 		participants=[]
 		for i in f.readlines():
@@ -289,39 +296,41 @@ def stopGiveaway(update, context):
 
 def InlineQueryHandler(update, context):
 	
-    """Handle the inline query."""
-    query = update.inline_query.query
-	# calendar = getTodayCalendar(update,context,"context")
-    if query == "":
-        return
+	query = update.inline_query.query
+	calendar = getTodayCalendar(update,context,"context")
+	whitelist = readToday(update,context,"context")
+	if query == "":
+		return
+	# print("QUERY: "+str(update))
+	if(update.inline_query.chat_type=="private"):
+		# chat = context.bot.get_chat()
+		# print("CHAT"+str(chat))
+		update.inline_query.answer([
+		InlineQueryResultArticle(
+            id = str(uuid4()),
+			title="Whitelist",
+			input_message_content=InputTextMessageContent(str(whitelist)),
+			description="Shows all whitelist we are in so far",
+		),
+		InlineQueryResultArticle(
+            id = str(uuid4()),
+			title="Calendar",
+			input_message_content=InputTextMessageContent(str(calendar)),
+			description="Shows calendar for the day"
+		),
+	])
+	
 
-    results = [
-        InlineQueryResultArticle(
-            id=str(uuid4()),
-            title="Whitelist",
-            input_message_content=InputTextMessageContent("/wl@BscFetcherBot"),
-        ),
-        InlineQueryResultArticle(
-            id=str(uuid4()),
-            title="Calendar",
-            input_message_content=InputTextMessageContent("/cal@BscFetcherBot"),
-        ),
-    ]
 
-    update.inline_query.answer(results)
-	# context.bot.answer_inline_query(results="test")
-	# print(update)
-	# print(update["inline_query"]["query"])
-	# query = update["inline_query"]["query"]
-	# if(query=="Cal"):
-	# 	# update.inline_query.answer("test")
-	# 	chat_id = update['inline_query']["from_user"]["id"]
-	# 	print("CHAT ID : "+str(chat_id))
-	# 	# update.message.reply_text("TEst")
-	# 	# context.bot.send_message(chat_id=chat_id,text="Hey")
-	# 	today_date = date.today().strftime("%d/%m")
-	# 	context.bot.send_message(chat_id=chat_id,text="**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
-
+# def chosenInline(update,context):
+# 	print("+\n+")
+# 	choice = update.chosen_inline_result.result_id
+# 	chat_id = update.chosen_inline_result.from_user.id
+# 	if(choice==1):
+# 		context.bot.send_message(text="wl", chat_id=chat_id)
+# 	else:
+# 		x  = getTodayCalendar(update,context,"context")
+# 		context.bot.send_message(text=x, chat_id=chat_id)
 
 def queryHandler(update, context):
 	global ALLOWED_TO_JOIN
@@ -338,13 +347,21 @@ def queryHandler(update, context):
 				fi = open("giveaway.txt", "a")
 				fi.write("\n@"+user)
 				fi.close()
+		else:
+			print("Test")
 
 def MessageHandler(update, context):
 	global CALENDAR
 	global ADMINS
 	sender = update.message.from_user.username
 	message = update.message["text"]
-	if("Ass" in message or "ass" in message):
+	print(message)
+	if("@BscFetcherDevBot" in message):
+		if("cal" in message):
+			print(update.message.chat.id)
+			# x = getTodayCalendar(update,context,"context")
+			# context.bot.send_message(chat_id=update.effective_chat.id,text=x)
+	elif("Ass" in message or "ass" in message):
 		update.message.reply_text("Its ess for fuck's sake")
 	elif("🔱 TOKEN CALANDER" in message ):
 		# here it should be shelf
