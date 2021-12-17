@@ -35,7 +35,7 @@ HELP = """
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 GIVEAWAY_RUNNING= False
-ADMINS = ["thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
+ADMINS = ["Zhee_Conan","thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
 SUPER_ADMIN = ["cryptolima"]
 COIN_FLIP = ["Head","Tails"]
 WINNERS = 0
@@ -299,14 +299,13 @@ def InlineQueryHandler(update, context):
 	query = update.inline_query.query
 	calendar = getTodayCalendar(update,context,"context")
 	whitelist = readToday(update,context,"context")
-	if query == "":
-		return
+	#if query == "":
+	#	return
 	# print("QUERY: "+str(update))
-	if(update.inline_query.chat_type=="private"):
 		# chat = context.bot.get_chat()
 		# print("CHAT"+str(chat))
-		update.inline_query.answer([
-		InlineQueryResultArticle(
+	update.inline_query.answer([
+	InlineQueryResultArticle(
             id = str(uuid4()),
 			title="Whitelist",
 			input_message_content=InputTextMessageContent(str(whitelist)),
