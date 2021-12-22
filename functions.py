@@ -35,6 +35,7 @@ HELP = """
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 GIVEAWAY_RUNNING= False
+ONGOING_WHITELIST = ""
 ADMINS = ["Zhee_Conan","thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
 SUPER_ADMIN = ["cryptolima"]
 COIN_FLIP = ["Head","Tails"]
@@ -45,7 +46,7 @@ We are working on building a community
 
 La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 
-From token whitelists to presales  to launch dates to even NFTs"""
+From token whitelists to presales to launch dates to even NFTs"""
 
 #FUNCTIONS
 def notAllowed(update,context):
@@ -298,7 +299,11 @@ def InlineQueryHandler(update, context):
 	
 	query = update.inline_query.query
 	calendar = getTodayCalendar(update,context,"context")
-	whitelist = readToday(update,context,"context")
+	# whitelist = readToday(update,context,"context")
+	global ONGOING_WHITELIST
+	ShelfFIle = shelve.open('shelf')
+	ONGOING_WHITELIST = ShelfFile['ongoingwhitelist']
+	ShelfFile.close()
 	#if query == "":
 	#	return
 	# print("QUERY: "+str(update))
@@ -307,9 +312,9 @@ def InlineQueryHandler(update, context):
 	update.inline_query.answer([
 	InlineQueryResultArticle(
             id = str(uuid4()),
-			title="Whitelist",
-			input_message_content=InputTextMessageContent(str(whitelist)),
-			description="Shows all whitelist we are in so far",
+			title="Ongoing Whitelist",
+			input_message_content=InputTextMessageContent(ONGOING_WHITELIST),
+			description="Shows all the ongoing whitelists.",
 		),
 		InlineQueryResultArticle(
             id = str(uuid4()),
@@ -373,6 +378,15 @@ def MessageHandler(update, context):
 		ShelfFile['calendar'][today_date] = CALENDAR[today_date]
 		ShelfFile.close()
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
+	elif("❄️☃️Ongoing whitelist competitions ☃️❄️" in message):
+		global ONGOING_WHITELIST
+		ONGOING_WHITELIST = message
+		ShelfFile = shelve.open('shelf')
+		#add the shelf here
+		ShelfFile['ongoingwhitelist'] = message
+		ShelfFile.close()
+		update.message.reply_text("I added it to our ongoing whitelist")
+
 
 def help(update, context):
 	update.message.reply_text(HELP)
