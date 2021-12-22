@@ -302,7 +302,7 @@ def InlineQueryHandler(update, context):
 	# whitelist = readToday(update,context,"context")
 	global ONGOING_WHITELIST
 	ShelfFile = shelve.open('shelf')
-	ONGOING_WHITELIST = ShelfFile['ongoingwhitelist']
+	ONGOING_WHITELIST = ShelfFile['whitelist']
 	ShelfFile.close()
 	#if query == "":
 	#	return
@@ -383,7 +383,7 @@ def MessageHandler(update, context):
 		ONGOING_WHITELIST = message
 		ShelfFile = shelve.open('shelf')
 		#add the shelf here
-		ShelfFile['ongoingwhitelist'] = message
+		ShelfFile['whitelist'] = message
 		ShelfFile.close()
 		update.message.reply_text("I added it to our ongoing whitelist")
 
