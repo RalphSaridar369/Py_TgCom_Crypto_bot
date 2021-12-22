@@ -301,7 +301,7 @@ def InlineQueryHandler(update, context):
 	calendar = getTodayCalendar(update,context,"context")
 	# whitelist = readToday(update,context,"context")
 	global ONGOING_WHITELIST
-	ShelfFIle = shelve.open('shelf')
+	ShelfFile = shelve.open('shelf')
 	ONGOING_WHITELIST = ShelfFile['ongoingwhitelist']
 	ShelfFile.close()
 	#if query == "":
