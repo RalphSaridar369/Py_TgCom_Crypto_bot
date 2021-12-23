@@ -378,7 +378,7 @@ def MessageHandler(update, context):
 		ShelfFile['calendar'][today_date] = CALENDAR[today_date]
 		ShelfFile.close()
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
-	elif("❄️☃️Ongoing whitelist competitions ☃️❄️" in message):
+	elif("Ongoing whitelist competitions" in message):
 		global ONGOING_WHITELIST
 		ONGOING_WHITELIST = message
 		ShelfFile = shelve.open('shelf')
