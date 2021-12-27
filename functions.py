@@ -34,7 +34,9 @@ HELP = """
 	"""
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
+HTML_DATA_URL = None
 GIVEAWAY_RUNNING= False
+ONGOING_WHITELIST = ""
 ADMINS = ["Zhee_Conan","thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
 SUPER_ADMIN = ["cryptolima"]
 COIN_FLIP = ["Head","Tails"]
@@ -45,7 +47,7 @@ We are working on building a community
 
 La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 
-From token whitelists to presales  to launch dates to even NFTs"""
+From token whitelists to presales to launch dates to even NFTs"""
 
 #FUNCTIONS
 def notAllowed(update,context):
@@ -157,7 +159,7 @@ def getTodayCalendar(update,context,typeM):
 		result = CALENDAR[today_date]
 	except:
 		result = "You haven't inserted any calendar yet"
-		print("Error")
+		print("Error: "+result)
 	if(typeM=="update"):
 		update.message.reply_text(result)
 	else:
@@ -298,7 +300,9 @@ def InlineQueryHandler(update, context):
 	
 	query = update.inline_query.query
 	calendar = getTodayCalendar(update,context,"context")
-	whitelist = readToday(update,context,"context")
+	# whitelist = readToday(update,context,"context")
+	global ONGOING_WHITELIST
+	global HTML_DATA_URL
 	#if query == "":
 	#	return
 	# print("QUERY: "+str(update))
@@ -307,9 +311,9 @@ def InlineQueryHandler(update, context):
 	update.inline_query.answer([
 	InlineQueryResultArticle(
             id = str(uuid4()),
-			title="Whitelist",
-			input_message_content=InputTextMessageContent(str(whitelist)),
-			description="Shows all whitelist we are in so far",
+			title="Ongoing Whitelist",
+			input_message_content=InputTextMessageContent(HTML_DATA_URL,parse_mode=ParseMode.HTML),
+			description="Shows all the ongoing whitelists.",
 		),
 		InlineQueryResultArticle(
             id = str(uuid4()),
@@ -354,7 +358,7 @@ def MessageHandler(update, context):
 	global ADMINS
 	sender = update.message.from_user.username
 	message = update.message["text"]
-	print(message)
+	print(sender)
 	if("@BscFetcherDevBot" in message):
 		if("cal" in message):
 			print(update.message.chat.id)
@@ -373,6 +377,34 @@ def MessageHandler(update, context):
 		ShelfFile['calendar'][today_date] = CALENDAR[today_date]
 		ShelfFile.close()
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
+	elif("Ongoing whitelist competitions:" in message):
+		print("TESSSSSSSSSSSSSST")
+		whitelists = update.message.text.split('\n')[3::]
+		string = "Ongoing whitelist competitions:\n\n\n"
+		for i,n in enumerate(whitelists):
+			print(i)
+			url = n.split("-")[0]
+			date = n.split("-")[1]
+			string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
+		print("\n\n\n\n"+string+"\n\n\n\n")
+		global ONGOING_WHITELIST
+		global HTML_DATA_URL
+		ONGOING_WHITELIST = message
+		### shelf doesnt work for html parse
+		# ShelfFile = shelve.open('shelf')
+		#add the shelf here
+		# ShelfFile['ongoingwhitelist'] = string
+		# ShelfFile.close()
+		f = open("html.txt","w")
+		f.write(string)
+		HTML_DATA_URL = string
+		f.close()
+		update.message.reply_text("I added it to our ongoing whitelist")
+		# update.message.reply_text(string,parse_mode=ParseMode.HTML)
+	elif("testing" in message):
+		f = open("html.txt","r")
+		update.message.reply_text(''.join(f.readlines()),parse_mode=ParseMode.HTML)
+		f.close()
 
 def help(update, context):
 	update.message.reply_text(HELP)
