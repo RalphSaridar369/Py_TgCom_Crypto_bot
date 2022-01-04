@@ -11,6 +11,7 @@ from uuid import uuid4
 
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
+ShelfFile['calendar'] = ""
 CALENDAR = ShelfFile['calendar']
 ShelfFile.close()
 HELP = """
@@ -35,6 +36,7 @@ HELP = """
 CHAT_ID = -1001775758804
 GIVEAWAY_ID = 0
 HTML_DATA_URL = None
+HTML_CALENDAR_DATA_URL = None
 GIVEAWAY_RUNNING= False
 ONGOING_WHITELIST = ""
 ADMINS = ["Zhee_Conan","thebastardmak","cryptolima","watwatian","FaridFlintstone","vengefulsaxophone"]
@@ -151,6 +153,7 @@ def readToday(update,context,typeM):
 
 def getTodayCalendar(update,context,typeM):
 	global CALENDAR
+	global HTML_CALENDAR_DATA_URL
 	print("Getting calendar")
 	today_date = date.today().strftime("%d/%m")
 	result=""
@@ -163,7 +166,7 @@ def getTodayCalendar(update,context,typeM):
 	if(typeM=="update"):
 		update.message.reply_text(result)
 	else:
-		return result
+		return HTML_CALENDAR_DATA_URL
 
 def ntek(update, context):
 	#data = json.loads(update.message)
@@ -300,9 +303,11 @@ def InlineQueryHandler(update, context):
 	
 	query = update.inline_query.query
 	calendar = getTodayCalendar(update,context,"context")
+	print("Calendar:  "+calendar)
 	# whitelist = readToday(update,context,"context")
 	global ONGOING_WHITELIST
 	global HTML_DATA_URL
+	# global HTML_CALENDAR_DATA_URL
 	#if query == "":
 	#	return
 	# print("QUERY: "+str(update))
@@ -315,10 +320,10 @@ def InlineQueryHandler(update, context):
 			input_message_content=InputTextMessageContent(HTML_DATA_URL,parse_mode=ParseMode.HTML),
 			description="Shows all the ongoing whitelists.",
 		),
-		InlineQueryResultArticle(
+	InlineQueryResultArticle(
             id = str(uuid4()),
 			title="Calendar",
-			input_message_content=InputTextMessageContent(str(calendar)),
+			input_message_content=InputTextMessageContent(calendar,parse_mode=ParseMode.HTML),
 			description="Shows calendar for the day"
 		),
 	])
@@ -377,30 +382,47 @@ def MessageHandler(update, context):
 		ShelfFile['calendar'][today_date] = CALENDAR[today_date]
 		ShelfFile.close()
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
-	elif("Ongoing whitelist competitions:" in message):
-		print("TESSSSSSSSSSSSSST")
-		whitelists = update.message.text.split('\n')[3::]
-		string = "Ongoing whitelist competitions:\n\n\n"
-		for i,n in enumerate(whitelists):
-			print(i)
-			url = n.split("-")[0]
-			date = n.split("-")[1]
-			string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
-		print("\n\n\n\n"+string+"\n\n\n\n")
-		global ONGOING_WHITELIST
-		global HTML_DATA_URL
-		ONGOING_WHITELIST = message
-		### shelf doesnt work for html parse
-		# ShelfFile = shelve.open('shelf')
-		#add the shelf here
-		# ShelfFile['ongoingwhitelist'] = string
-		# ShelfFile.close()
-		f = open("html.txt","w")
-		f.write(string)
-		HTML_DATA_URL = string
-		f.close()
-		update.message.reply_text("I added it to our ongoing whitelist")
-		# update.message.reply_text(string,parse_mode=ParseMode.HTML)
+	elif("Ongoing whitelist competitions:" in message or "Tracked Projects" in message):
+		if("Ongoing whitelist competitions:" in message):
+			whitelists = update.message.text.split('\n')[3::]
+			string = "Ongoing whitelist competitions:\n\n\n"
+			for i,n in enumerate(whitelists):
+				url = n.split("-")[0]
+				date = n.split("-")[1]
+				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
+			print("\n\n\n\n"+string+"\n\n\n\n")
+			global ONGOING_WHITELIST
+			global HTML_DATA_URL
+			ONGOING_WHITELIST = message
+			### shelf doesnt work for html parse
+			# ShelfFile = shelve.open('shelf')
+			#add the shelf here
+			# ShelfFile['ongoingwhitelist'] = string
+			# ShelfFile.close()
+			f = open("html.txt","w")
+			f.write(string)
+			HTML_DATA_URL = string
+			f.close()
+			update.message.reply_text("I added it to our ongoing whitelist")
+			# update.message.reply_text(string,parse_mode=ParseMode.HTML)
+		elif("Tracked Projects" in message):
+			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
+			string = trackedprojects[0]
+			for i,n in enumerate(trackedprojects[1].split('members')[:len(trackedprojects[1].split('members'))-1:]):
+				# print(len(trackedprojects[1].split('members')[::]))
+				n = n + " members"
+				print("Item"+n+"\n")
+				url = n.split("-")[0]
+				date = n.split("-")[1]
+				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
+			print("\n\n\n\n"+string+"\n\n\n\n")
+			# global ONGOING_WHITELIST
+			global HTML_CALENDAR_DATA_URL
+			f = open("calendarhtml.txt","w")
+			f.write(string)
+			HTML_CALENDAR_DATA_URL = string
+			f.close()
+			update.message.reply_text("I added today's calendar")
 	elif("testing" in message):
 		f = open("html.txt","r")
 		update.message.reply_text(''.join(f.readlines()),parse_mode=ParseMode.HTML)
@@ -412,32 +434,13 @@ def help(update, context):
 def calendar(update, context):
 	
 	sender = update.message.from_user.username
-	# if(sender not in ADMINS):
-	# 	notAllowed(update,context)
-	#else:
 	global CALENDAR
-	#all_options = update.message
-	#option = all_options.text.split(" ")[1]
-	# if(option ==""):
-	# 	today_date = date.today().strftime("%d/%m")
-	# 	data = update.message.text.split("=")[1][1::]
-	# 	update.message.reply_text(CALENDAR[data])
-	# elif(option == "today"):
-	# 	today_date = date.today().strftime("%d/%m")
-	# 	data = update.message.text.split("=")[1]
-	# 	ShelfFile = shelve.open('shelf')
-	# 	CALENDAR[today_date] = data
-	# 	ShelfFile['calendar'][today_date] = CALENDAR[today_date]
-	# 	ShelfFile.close()
-	#   update.message.reply_text("Successfully added")
 	if("=" in update.message.text):
 		data = update.message.text.split("=")[1][1::]
 		update.message.reply_text("**("+data+"): **\n\n\n"+CALENDAR[data])
 	else:
 		print("in")
 		getTodayCalendar(update, context,"update")
-		# today_date = date.today().strftime("%d/%m")
-		# update.message.reply_text("**TODAY's CALENDAR: **\n\n\n"+CALENDAR[today_date])
 
 def joke(update, context):
 	data = ["Omak 3andi","I know your momma and, she knows me. You better believe it.","اعرف اين امك ايها الحقير"]
@@ -452,18 +455,6 @@ def joke(update, context):
 		update.message.reply_text(joke)
 
 def adminpanel(update,context):
-		# button = [
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],
-		# [InlineKeyboardButton("Join",callback_data="test")],]
-		# sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Admin Panel",
-		# reply_markup=InlineKeyboardMarkup(button))
 		"""
 		Start function. Displayed whenever the /start command is called.
 		This function sets the language of the bot.
