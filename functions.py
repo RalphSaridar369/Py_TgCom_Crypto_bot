@@ -191,9 +191,6 @@ def luckyWinner(update, context):
 
 	winners += "\n\n Congrats !! "
 	update.message.reply_text(winners)
-	#print(bot)
-	#choice = bot.getChatMemberCount(-1001775758804)
-	#print(bot.getChatMember(chat_id,choice))
 
 def pumpit(update, context):
 	for i in range(0,2):
@@ -314,12 +311,12 @@ def InlineQueryHandler(update, context):
 		# chat = context.bot.get_chat()
 		# print("CHAT"+str(chat))
 	update.inline_query.answer([
-	InlineQueryResultArticle(
-            id = str(uuid4()),
-			title="Ongoing Whitelist",
-			input_message_content=InputTextMessageContent(HTML_DATA_URL,parse_mode=ParseMode.HTML),
-			description="Shows all the ongoing whitelists.",
-		),
+	# InlineQueryResultArticle(
+    #         id = str(uuid4()),
+	# 		title="Ongoing Whitelist",
+	# 		input_message_content=InputTextMessageContent(HTML_DATA_URL,parse_mode=ParseMode.HTML),
+	# 		description="Shows all the ongoing whitelists.",
+	# 	),
 	InlineQueryResultArticle(
             id = str(uuid4()),
 			title="Calendar",
@@ -390,7 +387,6 @@ def MessageHandler(update, context):
 				url = n.split("-")[0]
 				date = n.split("-")[1]
 				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
-			print("\n\n\n\n"+string+"\n\n\n\n")
 			global ONGOING_WHITELIST
 			global HTML_DATA_URL
 			ONGOING_WHITELIST = message
@@ -404,18 +400,21 @@ def MessageHandler(update, context):
 			HTML_DATA_URL = string
 			f.close()
 			update.message.reply_text("I added it to our ongoing whitelist")
-			# update.message.reply_text(string,parse_mode=ParseMode.HTML)
 		elif("Tracked Projects" in message):
 			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
 			string = trackedprojects[0]
 			for i,n in enumerate(trackedprojects[1].split('members')[:len(trackedprojects[1].split('members'))-1:]):
 				# print(len(trackedprojects[1].split('members')[::]))
+				# if(i<2):
+				# 	continue
+				# print(update.message)
 				n = n + " members"
-				print("Item"+n+"\n")
+				print(n)
+				print(update.message.entities[i+2].url)
 				url = n.split("-")[0]
+				print(url)
 				date = n.split("-")[1]
-				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
-			print("\n\n\n\n"+string+"\n\n\n\n")
+				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+2].url,url,date)
 			# global ONGOING_WHITELIST
 			global HTML_CALENDAR_DATA_URL
 			f = open("calendarhtml.txt","w")
