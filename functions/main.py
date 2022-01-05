@@ -42,12 +42,11 @@ ADMINS = ["Zhee_Conan","thebastardmak","cryptolima","watwatian","FaridFlintstone
 SUPER_ADMIN = ["cryptolima"]
 COIN_FLIP = ["Head","Tails"]
 WINNERS = 0
-ABOUT_US_MESSAGE = """** Lebanese DeFi **\n\nWelcome to the group
-
+ALLOWED_TO_JOIN = True
+ABOUT_US_MESSAGE = """** Lebanese DeFi **\n\n
+Welcome to the group
 We are working on building a community
-
 La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
-
 From token whitelists to presales to launch dates to even NFTs"""
 
 #FUNCTIONS

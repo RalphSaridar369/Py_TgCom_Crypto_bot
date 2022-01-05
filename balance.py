@@ -1,5 +1,13 @@
 import requests
 import telegram.ext
+
+from functions.main import *
+from functions.giveaway import *
+from functions.inlinequeryhandler import *
+from functions.messagehandler import *
+from functions.queryhandler import *
+from functions.whitelist import *
+
 from functions import *
 from telegram import *
 import json
@@ -12,7 +20,7 @@ api_key = "2121277949:AAGnsnht0fJVh_zrsybJdpuc9TgJn6YOo5c"
 api_key_dev = "5079399379:AAFjP1KBQd7CIrgS2Mt8QSOMZjPWmb6Ovdw"
 print("Bot running in tg")
 
-updater = telegram.ext.Updater(api_key)
+updater = telegram.ext.Updater(api_key_dev)
 disp = updater.dispatcher
 disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("help",help))
@@ -28,9 +36,9 @@ disp.add_handler(telegram.ext.CommandHandler("ntek",ntek))
 disp.add_handler(telegram.ext.CommandHandler("mybalance",myWallet))
 disp.add_handler(telegram.ext.CommandHandler("yoda",yoda))
 disp.add_handler(telegram.ext.CommandHandler("badbot",badbot))
-disp.add_handler(telegram.ext.CommandHandler("give",giveaway))
+disp.add_handler(telegram.ext.CommandHandler("give",givefunction))
 disp.add_handler(telegram.ext.CommandHandler("stopgive",stopGiveaway))
-disp.add_handler(telegram.ext.CommandHandler("wl",whitelist))
+disp.add_handler(telegram.ext.CommandHandler("wl",test))
 disp.add_handler(telegram.ext.CommandHandler("cal",calendar))
 disp.add_handler(telegram.ext.CommandHandler("adminpanel",adminpanel))
 disp.add_handler(telegram.ext.CommandHandler("meme",meme))

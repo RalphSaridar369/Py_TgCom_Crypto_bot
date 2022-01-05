@@ -1,4 +1,6 @@
-def giveaway(update, context):
+from functions.main import *
+
+def givefunction(update, context):
 	global GIVEAWAY_RUNNING
 	global ALLOWED_TO_JOIN
 
