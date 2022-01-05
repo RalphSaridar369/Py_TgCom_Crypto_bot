@@ -1,5 +1,3 @@
-from functions.main import *
-
 def queryHandler(update, context):
         global ALLOWED_TO_JOIN
         if(ALLOWED_TO_JOIN):
