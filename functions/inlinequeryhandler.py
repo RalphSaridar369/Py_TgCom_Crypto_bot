@@ -4,7 +4,7 @@ from functions.globals import *
 def InlineQueryHandler(update, context):
 	
 	query = update.inline_query.query
-	calendar = getTodayCalendar(update,context,"context")
+	# calendar = getTodayCalendar(update,context,"context")
 	# print("Calendar:  "+str(calendar))
 	# whitelist = readToday(update,context,"context")
 	global ONGOING_WHITELIST

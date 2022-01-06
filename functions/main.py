@@ -76,10 +76,7 @@ def readToday(update,context,typeM):
 			return message
 
 def checkIfWhitelistExists():
-	global HTML_DATA_URL
-	f = open('html.txt','r')
-	HTML_DATA_URL = f.readlines()
-	if(HTML_DATA_URL==None):
+	if(getHtmlUrl()==None):
 		return "You haven't inserted whitelists yet"
 	else:
 		# file = open('html.txt','r')

@@ -38,5 +38,6 @@ def setHtmlUrl(value):
     HTML_DATA_URL = value
 
 def getHtmlUrl():
+    print("Getting Data")
     global HTML_DATA_URL
     return str(HTML_DATA_URL)
