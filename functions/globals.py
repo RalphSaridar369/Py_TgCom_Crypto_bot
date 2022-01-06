@@ -34,10 +34,18 @@ La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 From token whitelists to presales to launch dates to even NFTs"""
 
 def setHtmlUrl(value):
-    global HTML_DATA_URL
-    HTML_DATA_URL = value
+	global HTML_DATA_URL
+	HTML_DATA_URL = value
 
 def getHtmlUrl():
-    print("Getting Data")
-    global HTML_DATA_URL
-    return str(HTML_DATA_URL)
+	print("Getting Data")
+	# global HTML_DATA_URL
+	f = open('html.txt','r')
+	m=""
+	lines = f.readlines()
+	for i in lines:
+		m+=i
+	f.close()
+	if (m==""):
+		return "You haven't inserted anything yet"
+	return m

@@ -8,6 +8,7 @@ import shelve
 from uuid import uuid4
 from telegram.utils.helpers import escape_markdown
 from functions.globals import *
+import json
 
 #GLOBAL VARIABLES
 ShelfFile = shelve.open('shelf')
@@ -76,7 +77,9 @@ def readToday(update,context,typeM):
 			return message
 
 def checkIfWhitelistExists():
-	if(getHtmlUrl()==None):
+	res = getHtmlUrl() 
+	print(res)
+	if(res==None):
 		return "You haven't inserted whitelists yet"
 	else:
 		# file = open('html.txt','r')
@@ -88,7 +91,7 @@ def checkIfWhitelistExists():
 		# 	print(m)
 		# 	m+=i
 		# file.close()
-		return getHtmlUrl()
+		return res
 
 def getTodayCalendar(update,context,typeM):
 	global CALENDAR
