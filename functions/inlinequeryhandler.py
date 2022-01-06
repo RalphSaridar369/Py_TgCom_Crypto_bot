@@ -1,4 +1,5 @@
 from functions.main import *
+from functions.globals import * 
 
 def InlineQueryHandler(update, context):
 	

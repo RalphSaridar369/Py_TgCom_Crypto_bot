@@ -1,5 +1,6 @@
 from functions.main import * 
 from functions.giveaway import * 
+from functions.globals import * 
 
 def queryHandler(update, context):
     query = update.callback_query.data.split("-")

@@ -1,4 +1,6 @@
 from functions.main import * 
+from functions.globals import * 
+
 ALLOWED_TO_JOIN = None
 def giveaway(update, context):
 	global GIVEAWAY_RUNNING

@@ -1,4 +1,5 @@
 from functions.main import *
+from functions.globals import * 
 
 def MessageHandler(update, context):
 	global CALENDAR
@@ -36,9 +37,6 @@ def MessageHandler(update, context):
 				url = n.split("-")[0]
 				date = n.split("-")
 				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+count].url,url,date[len(date)-1])+"\n"
-			global ONGOING_WHITELIST
-			global HTML_DATA_URL
-			ONGOING_WHITELIST = message
 			### shelf doesnt work for html parse
 			# ShelfFile = shelve.open('shelf')
 			#add the shelf here
@@ -46,7 +44,7 @@ def MessageHandler(update, context):
 			# ShelfFile.close()
 			f = open("html.txt","w")
 			f.write(string)
-			HTML_DATA_URL = string
+			setHtmlUrl(string)
 			f.close()
 			update.message.reply_text("I added it to our ongoing whitelist")
 		elif("Tracked Projects" in message):
