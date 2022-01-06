@@ -4,11 +4,11 @@ def InlineQueryHandler(update, context):
 	
 	query = update.inline_query.query
 	calendar = getTodayCalendar(update,context,"context")
-	print("Calendar:  "+str(calendar))
+	# print("Calendar:  "+str(calendar))
 	# whitelist = readToday(update,context,"context")
 	global ONGOING_WHITELIST
 	global HTML_DATA_URL
-	calRes = checkIfWhitelistExists()
+	wlRes = checkIfWhitelistExists()
 	# global HTML_CALENDAR_DATA_URL
 	#if query == "":
 	#	return
@@ -19,7 +19,7 @@ def InlineQueryHandler(update, context):
 	InlineQueryResultArticle(
             id = str(uuid4()),
 			title="Ongoing Whitelist",
-			input_message_content=InputTextMessageContent(calRes,parse_mode=ParseMode.HTML),
+			input_message_content=InputTextMessageContent(wlRes,parse_mode=ParseMode.HTML),
 			description="Shows all the ongoing whitelists.",
 		),
 	InlineQueryResultArticle(

@@ -1,3 +1,5 @@
+from functions.main import *
+
 def MessageHandler(update, context):
 	global CALENDAR
 	global ADMINS
@@ -26,11 +28,14 @@ def MessageHandler(update, context):
 	elif("Ongoing whitelist competitions:" in message or "Tracked Projects" in message):
 		if("Ongoing whitelist competitions:" in message):
 			whitelists = update.message.text.split('\n')[3::]
-			string = "Ongoing whitelist competitions:\n\n\n"
+			string = "whitelist Ongoing competitions:\n\n\n"
+			count = 0
 			for i,n in enumerate(whitelists):
+				if(update.message.entities[i].url == None):
+					count += 1
 				url = n.split("-")[0]
-				date = n.split("-")[1]
-				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i].url,url,date)+"\n"
+				date = n.split("-")
+				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+count].url,url,date[len(date)-1])+"\n"
 			global ONGOING_WHITELIST
 			global HTML_DATA_URL
 			ONGOING_WHITELIST = message

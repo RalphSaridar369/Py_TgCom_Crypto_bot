@@ -107,26 +107,40 @@ def readToday(update,context,typeM):
 		else:
 			return message
 
-def checkIfWhitelistExists ():
+def checkIfWhitelistExists():
 	global HTML_DATA_URL
-	if(HTML_DATA_URL == None):
+	f = open('html.txt','r')
+	HTML_DATA_URL = f.readlines()
+	if(HTML_DATA_URL==None):
 		return "You haven't inserted whitelists yet"
 	else:
-		return HTML_DATA_URL
+		file = open('html.txt','r')
+		lines = file.readlines()
+		# return str(lines)
+		lines = [line for line in lines]
+		m= ""
+		for i in lines:
+			print(m)
+			m+=i
+		file.close()
+		return m 
 
 def getTodayCalendar(update,context,typeM):
 	global CALENDAR
 	global HTML_CALENDAR_DATA_URL
-	print("Getting calendar")
-	today_date = date.today().strftime("%d/%m")
-	result=""
-	try:
-		print(CALENDAR[today_date])
-		result = CALENDAR[today_date]
-	except:
-		result = "You haven't inserted any calendar yet"		
-		return result
-	if(typeM=="update"):
+	# print("Getting calendar")
+	# today_date = date.today().strftime("%d/%m")
+	# result=""
+	# try:
+	# 	print(CALENDAR[today_date])
+	# 	result = CALENDAR[today_date]
+	# except:
+	# 	result = "You haven't inserted any1 calendar yet"
+	# 	print(1233456)		
+	# 	return result
+	if(HTML_CALENDAR_DATA_URL == None):
+		return "You haven't inserted any calendar yet"
+	elif(typeM=="update"):
 		update.message.reply_text(result)
 	else:
 		return HTML_CALENDAR_DATA_URL
