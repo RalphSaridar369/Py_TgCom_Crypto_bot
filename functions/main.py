@@ -10,12 +10,6 @@ from telegram.utils.helpers import escape_markdown
 from functions.globals import *
 import json
 
-#GLOBAL VARIABLES
-ShelfFile = shelve.open('shelf')
-ShelfFile['calendar'] = ""
-CALENDAR = ShelfFile['calendar']
-ShelfFile.close()
-
 #FUNCTIONS
 def notAllowed(update,context):
 	message = ["Not allowed habibo","Enssss","Jareba ba3ed marra barken btezbat"]

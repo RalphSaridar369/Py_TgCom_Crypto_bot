@@ -1,13 +1,16 @@
 whitelist Ongoing competitions:
 
 
-<a href='https://t.me/DigitalRe'>DigitalRe          </a>   27/12/21  | 12:00utc
-<a href='https://t.me/witcherverse'>Witchverse      </a>   28/12/21 | 17:30utc
-<a href='https://t.me/cryptocrushgame'>CryptoCrush  </a>   29/12/21  |  TBA
-<a href='https://t.me/cuffiesofficial'>cuffiesofficial  </a>   03/01/21 |  TBA
-<a href='https://t.me/SquidVerse3D'>squidverse3D </a>         TBA
-<a href='https://t.me/spadeofficial'>sapdeofficial   </a>          TBA
-<a href='https://t.me/Minutes11'>minutes11         </a>          TBA
-<a href='https://t.me/DreamGirlOfficial'>DreamGirl        </a>          TBA
-<a href='https://t.me/ravenft'>reavenft            </a>          TBA
-<a href='https://t.me/Kringlz'>Kringlz              </a>           TBA
+<a href='https://t.me/ravenft'>ravenft                 </a>   30/12/21 | 17:00utc
+<a href='https://t.me/KirbyX_coin'>KirbyX_coin       </a>   30/12/21 | TBA
+<a href='https://t.me/rewardcycle'>RewardCycle    </a>   02/01/22 | 17:00utc
+<a href='https://t.me/cuffiesofficial'>cuffiesofficial    </a>   03/01/22 | 17:00utc
+<a href='https://t.me/DreamGirlOfficial'>DreamGirl          </a>   03/01/22 | 18:00utc
+<a href='https://t.me/zoobitfinancetoken'>ZoobitFinance  </a>   04/01/21 | TBA
+<a href='https://t.me/InfiniteTG'>InfiniteTG           </a>   05/01/22 | 19:00utc
+<a href='https://t.me/everreflect'>EverReflect       </a>   18/01/22  | TBA
+<a href='https://t.me/SquidVerse3D'>squidverse3D  </a>          TBA
+<a href='https://t.me/spadeofficial'>sapdeofficial     </a>          TBA
+<a href='https://t.me/Kringlz'>Kringlz                </a>          TBA
+<a href='https://t.me/FiPiToken'>FiPiToken           </a>          TBA
+<a href='https://t.me/nftbeat'>Nftbeat               </a>          TBA

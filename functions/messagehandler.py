@@ -28,15 +28,26 @@ def MessageHandler(update, context):
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
 	elif("Ongoing whitelist competitions:" in message or "Tracked Projects" in message):
 		if("Ongoing whitelist competitions:" in message):
-			whitelists = update.message.text.split('\n')[3::]
+			whitelists = update.message.text.split('\n')[1::]
 			string = "whitelist Ongoing competitions:\n\n\n"
 			count = 0
+			countLines = 0
 			for i,n in enumerate(whitelists):
+				print(update.message.entities[i])
 				if(update.message.entities[i].url == None):
 					count += 1
-				url = n.split("-")[0]
-				date = n.split("-")
-				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+count].url,url,date[len(date)-1])+"\n"
+				else:
+					break
+			print(count)
+			for i,n in enumerate(whitelists):
+				if(("-") in n):
+					# print("ITEM: ",n," ",i)
+					# print(update.message.entities[i-2].url)
+					url = n.split("-")[0]
+					date = n.split("-")
+					string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i-countLines+count].url,url,date[1])+"\n"
+				else:
+					countLines +=1
 			### shelf doesnt work for html parse
 			# ShelfFile = shelve.open('shelf')
 			#add the shelf here
@@ -62,6 +73,7 @@ def MessageHandler(update, context):
 				# print(url)
 				date = n.split("-")[1]
 				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+2].url,url,date)
+			setHtmlCalUrl(string)
 			# global ONGOING_WHITELIST
 			global HTML_CALENDAR_DATA_URL
 			f = open("calendarhtml.txt","w")

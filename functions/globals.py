@@ -1,3 +1,4 @@
+import shelve
 #GLOBAL VARIABLES 
 HELP = """
 		The following commands are available:
@@ -33,19 +34,24 @@ We are working on building a community
 La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 From token whitelists to presales to launch dates to even NFTs"""
 
+ShelfFile = shelve.open('shelf')
+ShelfFile['calendar'] = ""
+ShelfFile['whitelist_html'] = ""
+ShelfFile['calendar_html'] = ""
+CALENDAR = ShelfFile['calendar']
+
 def setHtmlUrl(value):
-	global HTML_DATA_URL
-	HTML_DATA_URL = value
+	print("Setting Shelf Data")
+	ShelfFile['whitelist_html'] = value
 
 def getHtmlUrl():
-	print("Getting Data")
-	# global HTML_DATA_URL
-	f = open('html.txt','r')
-	m=""
-	lines = f.readlines()
-	for i in lines:
-		m+=i
-	f.close()
-	if (m==""):
-		return "You haven't inserted anything yet"
-	return m
+	print("Getting Shelf Data")
+	return ShelfFile['whitelist_html']
+
+def setHtmlCalUrl(value):
+	print("Setting Shelf Data")
+	ShelfFile['calendar_html'] = value
+
+def getHtmlCalUrl():
+	print("Getting Shelf Data")
+	return ShelfFile['calendar_html']
