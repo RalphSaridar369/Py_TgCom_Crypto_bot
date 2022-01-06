@@ -1,3 +1,5 @@
+from functions.main import *
+
 def whitelist(update, context):
 
         sender = update.message.from_user.username
@@ -25,6 +27,7 @@ def whitelist(update, context):
                         update.message.reply_text("Successfully added")
                 elif(option=="read"):
                         readToday(update,context,"normal")
+                        pass
                         # ShelfFile = shelve.open('shelf')
                         # lines = ShelfFile['whitelist']
                         # #try:

@@ -1,11 +1,14 @@
+from functions.main import *
+
 def InlineQueryHandler(update, context):
 	
 	query = update.inline_query.query
 	calendar = getTodayCalendar(update,context,"context")
-	print("Calendar:  "+calendar)
+	print("Calendar:  "+str(calendar))
 	# whitelist = readToday(update,context,"context")
 	global ONGOING_WHITELIST
 	global HTML_DATA_URL
+	calRes = checkIfWhitelistExists()
 	# global HTML_CALENDAR_DATA_URL
 	#if query == "":
 	#	return
@@ -13,12 +16,12 @@ def InlineQueryHandler(update, context):
 		# chat = context.bot.get_chat()
 		# print("CHAT"+str(chat))
 	update.inline_query.answer([
-	# InlineQueryResultArticle(
-    #         id = str(uuid4()),
-	# 		title="Ongoing Whitelist",
-	# 		input_message_content=InputTextMessageContent(HTML_DATA_URL,parse_mode=ParseMode.HTML),
-	# 		description="Shows all the ongoing whitelists.",
-	# 	),
+	InlineQueryResultArticle(
+            id = str(uuid4()),
+			title="Ongoing Whitelist",
+			input_message_content=InputTextMessageContent(calRes,parse_mode=ParseMode.HTML),
+			description="Shows all the ongoing whitelists.",
+		),
 	InlineQueryResultArticle(
             id = str(uuid4()),
 			title="Calendar",

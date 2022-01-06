@@ -3,18 +3,19 @@ def MessageHandler(update, context):
 	global ADMINS
 	sender = update.message.from_user.username
 	message = update.message["text"]
-	print(sender)
+	# print(sender)
 	if("@BscFetcherDevBot" in message):
 		if("cal" in message):
-			print(update.message.chat.id)
+			pass
+			# print(update.message.chat.id)
 			# x = getTodayCalendar(update,context,"context")
 			# context.bot.send_message(chat_id=update.effective_chat.id,text=x)
 	elif("Ass" in message or "ass" in message):
 		update.message.reply_text("Its ess for fuck's sake")
 	elif("🔱 TOKEN CALANDER" in message ):
 		# here it should be shelf
-		print("Should add the list")
-		print(message)
+		# print("Should add the list")
+		# print(message)
 		today_date = date.today().strftime("%d/%m")
 		ShelfFile = shelve.open('shelf')
 		#add the shelf here
@@ -52,10 +53,10 @@ def MessageHandler(update, context):
 				# 	continue
 				# print(update.message)
 				n = n + " members"
-				print(n)
-				print(update.message.entities[i+2].url)
+				# print(n)
+				# print(update.message.entities[i+2].url)
 				url = n.split("-")[0]
-				print(url)
+				# print(url)
 				date = n.split("-")[1]
 				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+2].url,url,date)
 			# global ONGOING_WHITELIST

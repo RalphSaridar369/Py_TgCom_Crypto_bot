@@ -1,3 +1,5 @@
+from functions.main import * 
+ALLOWED_TO_JOIN = None
 def giveaway(update, context):
 	global GIVEAWAY_RUNNING
 	global ALLOWED_TO_JOIN
@@ -23,7 +25,7 @@ def giveaway(update, context):
 		WINNERS = winnersLn
 		#participantsLn = int(message.split(" ")[2])
 		#print("Test")
-		button = [[InlineKeyboardButton("Join",callback_data="join_giveaway"+"-"+update.message.from_user.first_name+"")]]
+		button = [[InlineKeyboardButton("Join",callback_data="join_giveaway"+"-"+ALLOWED_TO_JOIN)]]
 		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Giveaway "+giveawayName+"\n\n\nNumber of Winners: "+str(winnersLn),
 		reply_markup=InlineKeyboardMarkup(button))
 

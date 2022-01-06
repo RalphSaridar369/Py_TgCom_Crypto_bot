@@ -1,6 +1,11 @@
 import requests
 import telegram.ext
-from functions import *
+from functions.main import *
+from functions.giveaway import *
+from functions.inlinequeryhandler import *
+from functions.messagehandler import *
+from functions.queryhandler import *
+from functions.whitelist import *
 from telegram import *
 import json
 import math

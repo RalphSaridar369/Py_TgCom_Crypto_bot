@@ -43,11 +43,8 @@ SUPER_ADMIN = ["cryptolima"]
 COIN_FLIP = ["Head","Tails"]
 WINNERS = 0
 ABOUT_US_MESSAGE = """** Lebanese DeFi **\n\nWelcome to the group
-
 We are working on building a community
-
 La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
-
 From token whitelists to presales to launch dates to even NFTs"""
 
 #FUNCTIONS
@@ -93,7 +90,12 @@ def yoda(update,context):
 
 def readToday(update,context,typeM):
 		ShelfFile = shelve.open('shelf')
-		lines = ShelfFile['whitelist']
+		try:
+			lines = ShelfFile['whitelist']
+		except ValueError:
+			if(typeM=="normal"):
+				update.message.reply_text("You haven't inserted any whitelists yet")
+
 		#try:
 		#	lines = lines.replace('\n', '')
 		#except ValueError:
@@ -105,6 +107,13 @@ def readToday(update,context,typeM):
 		else:
 			return message
 
+def checkIfWhitelistExists ():
+	global HTML_DATA_URL
+	if(HTML_DATA_URL == None):
+		return "You haven't inserted whitelists yet"
+	else:
+		return HTML_DATA_URL
+
 def getTodayCalendar(update,context,typeM):
 	global CALENDAR
 	global HTML_CALENDAR_DATA_URL
@@ -115,8 +124,8 @@ def getTodayCalendar(update,context,typeM):
 		print(CALENDAR[today_date])
 		result = CALENDAR[today_date]
 	except:
-		result = "You haven't inserted any calendar yet"
-		print("Error: "+result)
+		result = "You haven't inserted any calendar yet"		
+		return result
 	if(typeM=="update"):
 		update.message.reply_text(result)
 	else:
