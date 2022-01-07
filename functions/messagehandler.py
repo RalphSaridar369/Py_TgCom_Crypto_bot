@@ -6,6 +6,7 @@ def MessageHandler(update, context):
 	global ADMINS
 	sender = update.message.from_user.username
 	message = update.message["text"]
+	print(message)
 	# print(sender)
 	if("@BscFetcherDevBot" in message):
 		if("cal" in message):
@@ -59,6 +60,7 @@ def MessageHandler(update, context):
 			f.close()
 			update.message.reply_text("I added it to our ongoing whitelist")
 		elif("Tracked Projects:" in message):
+			update.message.reply_text("Step before for loop")	
 			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
 			string = trackedprojects[0].replace("Tracked Projects","Projects Tracked")
 			update.message.reply_text("Step before for loop")	
