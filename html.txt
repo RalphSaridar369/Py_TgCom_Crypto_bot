@@ -1,16 +1,13 @@
 whitelist Ongoing competitions:
 
 
-<a href='https://t.me/ravenft'>ravenft                 </a>   30/12/21 | 17:00utc
-<a href='https://t.me/KirbyX_coin'>KirbyX_coin       </a>   30/12/21 | TBA
-<a href='https://t.me/rewardcycle'>RewardCycle    </a>   02/01/22 | 17:00utc
-<a href='https://t.me/cuffiesofficial'>cuffiesofficial    </a>   03/01/22 | 17:00utc
-<a href='https://t.me/DreamGirlOfficial'>DreamGirl          </a>   03/01/22 | 18:00utc
-<a href='https://t.me/zoobitfinancetoken'>ZoobitFinance  </a>   04/01/21 | TBA
-<a href='https://t.me/InfiniteTG'>InfiniteTG           </a>   05/01/22 | 19:00utc
-<a href='https://t.me/everreflect'>EverReflect       </a>   18/01/22  | TBA
-<a href='https://t.me/SquidVerse3D'>squidverse3D  </a>          TBA
-<a href='https://t.me/spadeofficial'>sapdeofficial     </a>          TBA
-<a href='https://t.me/Kringlz'>Kringlz                </a>          TBA
-<a href='https://t.me/FiPiToken'>FiPiToken           </a>          TBA
-<a href='https://t.me/nftbeat'>Nftbeat               </a>          TBA
+<a href='https://t.me/Chihua_inu'>Chihua_inu          </a>   06/01/22 | 16:00utc
+<a href='https://t.me/HoneyFi_Club'>HoneyFi_Club    </a>   06/01/22 | 16:00utc
+<a href='https://t.me/GladiatorFlokiBSC'>GladiatorFloki    </a>   08/01/22 | 15:00utc
+<a href='https://t.me/TrustFlokiWallet'>TrustFlokiWallet</a>   09/01/22 | 14:00utc
+<a href='https://t.me/safemoonomics'>SafeMoonomic </a>   10/01/22 | 16:00utc
+<a href='https://t.me/SuperFlokiBsc'>SuperFlokiBsc  </a>   12/01/22 | 15:00utc
+<a href='https://t.me/everreflect'>EverReflect         </a>   18/01/22  | TBA
+<a href='https://t.me/tankbattlechannel'>TankBattle          </a>   20/01/22 | TBA
+<a href='https://t.me/reflexfinanceOfficial'>ReflexFinance   </a>    02/02/22 | TBA
+<a href='https://t.me/SquidVerse3D'>squidverse3D    </a>          TBA

@@ -32,22 +32,22 @@ def MessageHandler(update, context):
 			string = "whitelist Ongoing competitions:\n\n\n"
 			count = 0
 			countLines = 0
-			for i,n in enumerate(whitelists):
-				print(update.message.entities[i])
-				if(update.message.entities[i].url == None):
-					count += 1
-				else:
-					break
-			print(count)
+			# for i,n in enumerate(whitelists):
+			# 	print(update.message.entities[i])
+			# 	if(update.message.entities[i].url == None):
+			# 		count += 1
+			# 	else:
+			# 		break
+			# print(count)
 			for i,n in enumerate(whitelists):
 				if(("-") in n):
 					# print("ITEM: ",n," ",i)
 					# print(update.message.entities[i-2].url)
 					url = n.split("-")[0]
 					date = n.split("-")
-					string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i-countLines+count].url,url,date[1])+"\n"
+					string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i-countLines+1].url,url,date[1])+"\n"
 				else:
-					countLines +=1
+					countLines +=1   
 			### shelf doesnt work for html parse
 			# ShelfFile = shelve.open('shelf')
 			#add the shelf here
@@ -60,7 +60,7 @@ def MessageHandler(update, context):
 			update.message.reply_text("I added it to our ongoing whitelist")
 		elif("Tracked Projects" in message):
 			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
-			string = trackedprojects[0]
+			string = trackedprojects[0].replace("Tracked Projects","Projects Tracked")
 			for i,n in enumerate(trackedprojects[1].split('members')[:len(trackedprojects[1].split('members'))-1:]):
 				# print(len(trackedprojects[1].split('members')[::]))
 				# if(i<2):

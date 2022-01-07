@@ -41,17 +41,17 @@ ShelfFile['calendar_html'] = ""
 CALENDAR = ShelfFile['calendar']
 
 def setHtmlUrl(value):
-	print("Setting Shelf Data")
+	print("Setting Shelf Data Whitelist")
 	ShelfFile['whitelist_html'] = value
 
 def getHtmlUrl():
-	print("Getting Shelf Data")
+	print("Getting Shelf Data Whitelist")
 	return ShelfFile['whitelist_html']
 
 def setHtmlCalUrl(value):
-	print("Setting Shelf Data")
+	print("Setting Shelf Data Calendar")
 	ShelfFile['calendar_html'] = value
 
 def getHtmlCalUrl():
-	print("Getting Shelf Data")
+	print("Getting Shelf Data Calendar")
 	return ShelfFile['calendar_html']
