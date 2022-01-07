@@ -58,9 +58,10 @@ def MessageHandler(update, context):
 			setHtmlUrl(string)
 			f.close()
 			update.message.reply_text("I added it to our ongoing whitelist")
-		elif("Tracked Projects" in message):
+		elif("Tracked Projects:" in message):
 			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
 			string = trackedprojects[0].replace("Tracked Projects","Projects Tracked")
+			update.message.reply_text("Step before for loop")	
 			for i,n in enumerate(trackedprojects[1].split('members')[:len(trackedprojects[1].split('members'))-1:]):
 				# print(len(trackedprojects[1].split('members')[::]))
 				# if(i<2):
@@ -73,13 +74,9 @@ def MessageHandler(update, context):
 				# print(url)
 				date = n.split("-")[1]
 				string += "<a href='{}'>{}</a>  {}".format(update.message.entities[i+2].url,url,date)
+			update.message.reply_text("Step before setting")	
 			setHtmlCalUrl(string)
 			# global ONGOING_WHITELIST
-			global HTML_CALENDAR_DATA_URL
-			f = open("calendarhtml.txt","w")
-			f.write(string)
-			HTML_CALENDAR_DATA_URL = string
-			f.close()
 			update.message.reply_text("I added today's calendar")
 	elif("testing" in message):
 		f = open("html.txt","r")
