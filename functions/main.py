@@ -142,7 +142,11 @@ def pumpit(update, context):
 		update.message.reply_text(message.upper())
 
 def content(update, context):
-	update.message.reply_text(ABOUT_US_MESSAGE)
+		buttons = [[InlineKeyboardButton("Chapter 1",callback_data="chapter_1_-about")],
+				  [InlineKeyboardButton("Chapter 2",callback_data="chapter_2_-about")],
+				  [InlineKeyboardButton("Chapter 3",callback_data="chapter_3_-about")],]
+		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="About us",
+		reply_markup=InlineKeyboardMarkup(buttons))
 
 def coinflip(update, context):
 	update.message.reply_text(COIN_FLIP[random.randint(0,1)])

@@ -1,18 +1,15 @@
 from functions.main import * 
 from functions.giveaway import * 
 from functions.globals import * 
-
+from data.About import *
 def queryHandler(update, context):
     query = update.callback_query.data.split("-")
-#     global ALLOWED_TO_JOIN
-#     print(ALLOWED_TO_JOIN)
+    user = update.callback_query.from_user.username
+    iduser = update.callback_query.from_user.id
     if(query[1]):
-        user = update.callback_query.from_user.username
-        # print("DATA: "+update.callback_query.data)
         query = update.callback_query.data.split("-")
         update.callback_query.answer()
         if "join_giveaway" in query[0]:
-        #     print(user)
             f = open("giveaway.txt","r")
             lines = f.readlines()
             if("@"+user not in lines):
@@ -20,5 +17,8 @@ def queryHandler(update, context):
                 fi.write("\n@"+user)
                 fi.close()
             else:
-                # print("Test")
                 pass
+
+        elif "chapter" in query[0]:
+            choice = int(update.callback_query.data.split("_")[1])
+            context.bot.send_message(chat_id=iduser, text=dataAbout[choice-1])

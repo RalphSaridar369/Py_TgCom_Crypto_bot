@@ -1,13 +1,9 @@
 whitelist Ongoing competitions:
 
 
-<a href='https://t.me/Chihua_inu'>Chihua_inu          </a>   06/01/22 | 16:00utc
-<a href='https://t.me/HoneyFi_Club'>HoneyFi_Club    </a>   06/01/22 | 16:00utc
-<a href='https://t.me/GladiatorFlokiBSC'>GladiatorFloki    </a>   08/01/22 | 15:00utc
-<a href='https://t.me/TrustFlokiWallet'>TrustFlokiWallet</a>   09/01/22 | 14:00utc
 <a href='https://t.me/safemoonomics'>SafeMoonomic </a>   10/01/22 | 16:00utc
+<a href='https://t.me/AnonyDoxxOfficial'>AnonyDoxx        </a>   10/01/22 | TBA
 <a href='https://t.me/SuperFlokiBsc'>SuperFlokiBsc  </a>   12/01/22 | 15:00utc
-<a href='https://t.me/everreflect'>EverReflect         </a>   18/01/22  | TBA
-<a href='https://t.me/tankbattlechannel'>TankBattle          </a>   20/01/22 | TBA
+<a href='https://t.me/everreflect'>EverReflect         </a>   17/01/22  | TBA
 <a href='https://t.me/reflexfinanceOfficial'>ReflexFinance   </a>    02/02/22 | TBA
 <a href='https://t.me/SquidVerse3D'>squidverse3D    </a>          TBA
