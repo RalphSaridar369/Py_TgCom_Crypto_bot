@@ -16,15 +16,15 @@ def notAllowed(update,context):
 	update.message.reply_text(message[random.randint(0,len(message)-1)])
 
 def start(update, context):
-		typeChat = update.message.chat.type
-		if(typeChat=="group"):
-			update.message.reply_text("https://t.me/BscFetcherDevBot?start")
-		else:
-			buttons = [[InlineKeyboardButton("Chapter 1",callback_data="chapter_1_-about")],
-					[InlineKeyboardButton("Chapter 2",callback_data="chapter_2_-about")],
-					[InlineKeyboardButton("Chapter 3",callback_data="chapter_3_-about")],]
-			sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Hello! Welcome to Lebanese DeFi! Let's make some bucks baby...\npress on any button below to get to know about us more.",
-			reply_markup=InlineKeyboardMarkup(buttons))
+	typeChat = update.message.chat.type
+	if(typeChat=="group"):
+		update.message.reply_text("https://t.me/BscFetcherDevBot?start")
+	else:
+		buttons = [[InlineKeyboardButton("Chapter 1",callback_data="chapter_1_-about")],
+				[InlineKeyboardButton("Chapter 2",callback_data="chapter_2_-about")],
+				[InlineKeyboardButton("Chapter 3",callback_data="chapter_3_-about")],]
+		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Hello! Welcome to Lebanese DeFi! Let's make some bucks baby...\npress on any button below to get to know about us more.",
+		reply_markup=InlineKeyboardMarkup(buttons))
 
 def meme(update,context):
 	chatid = update['message']['chat']['id']
