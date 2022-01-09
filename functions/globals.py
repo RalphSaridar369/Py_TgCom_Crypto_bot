@@ -2,6 +2,7 @@ import shelve
 #GLOBAL VARIABLES 
 HELP = """
 		The following commands are available:
+		/guide => Give an introduction
 		/balance => Gives balance of community's wallet
 		/about => About Us
 		/coinflip => Head or Tails
