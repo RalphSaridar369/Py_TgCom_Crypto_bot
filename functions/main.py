@@ -18,7 +18,7 @@ def notAllowed(update,context):
 def start(update, context):
 	typeChat = update.message.chat.type
 	if(typeChat=="group" or typeChat=="supergroup"):
-		update.message.reply_text("https://t.me/BscFetcherDevBot?start")
+		update.message.reply_text('<a href="https://t.me/BscFetcherDevBot?start">Press here </a>',parse_mode=ParseMode.HTML)
 	else:
 		buttons = [[InlineKeyboardButton("Chapter 1",callback_data="chapter_1_-about")],
 				[InlineKeyboardButton("Chapter 2",callback_data="chapter_2_-about")],
