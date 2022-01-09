@@ -17,15 +17,19 @@ def notAllowed(update,context):
 
 def start(update, context):
 	typeChat = update.message.chat.type
-	if(typeChat=="group" or typeChat=="supergroup"):
-		update.message.reply_text('<a href="https://t.me/BscFetcherDevBot?start">Press here </a>',parse_mode=ParseMode.HTML)
-	else:
+	if(typeChat == 'private'):
 		buttons = [[InlineKeyboardButton("Chapter 1",callback_data="chapter_1_-about")],
 				[InlineKeyboardButton("Chapter 2",callback_data="chapter_2_-about")],
 				[InlineKeyboardButton("Chapter 3",callback_data="chapter_3_-about")],]
 		sent = context.bot.send_message(chat_id=update.effective_chat.id, text="Hello! Welcome to Lebanese DeFi! Let's make some bucks baby...\npress on any button below to get to know about us more.",
 		reply_markup=InlineKeyboardMarkup(buttons))
 
+
+def guide(update, context):
+	typeChat = update.message.chat.type
+	if(typeChat=="group" or typeChat=="supergroup"):
+		update.message.reply_text('<a href="https://t.me/BscFetcherDevBot?start">Press here </a>',parse_mode=ParseMode.HTML)
+		
 def meme(update,context):
 	chatid = update['message']['chat']['id']
 	page = requests.get("https://meme-api.herokuapp.com/gimme")
