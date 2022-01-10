@@ -29,6 +29,7 @@ def MessageHandler(update, context):
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
 	if("Ongoing whitelist competitions:" in message or "Tracked Projects" in message):
 		if("Ongoing whitelist competitions:" in message):
+			
 			whitelists = update.message.text.split('\n')[1::]
 			string = "whitelist Ongoing competitions:\n\n\n"
 			count = 0
