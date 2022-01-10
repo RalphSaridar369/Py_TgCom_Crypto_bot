@@ -14,8 +14,6 @@ def MessageHandler(update, context):
 			# print(update.message.chat.id)
 			# x = getTodayCalendar(update,context,"context")
 			# context.bot.send_message(chat_id=update.effective_chat.id,text=x)
-	if("Ass" in message or "ass" in message):
-		update.message.reply_text("Its ess for fuck's sake")
 	if("🔱 TOKEN CALANDER" in message ):
 		# here it should be shelf
 		# print("Should add the list")
