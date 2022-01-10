@@ -14,9 +14,9 @@ def MessageHandler(update, context):
 			# print(update.message.chat.id)
 			# x = getTodayCalendar(update,context,"context")
 			# context.bot.send_message(chat_id=update.effective_chat.id,text=x)
-	elif("Ass" in message or "ass" in message):
+	if("Ass" in message or "ass" in message):
 		update.message.reply_text("Its ess for fuck's sake")
-	elif("🔱 TOKEN CALANDER" in message ):
+	if("🔱 TOKEN CALANDER" in message ):
 		# here it should be shelf
 		# print("Should add the list")
 		# print(message)
@@ -27,8 +27,9 @@ def MessageHandler(update, context):
 		ShelfFile['calendar'][today_date] = CALENDAR[today_date]
 		ShelfFile.close()
 		update.message.reply_text("I added it to our list, if you want to check, write /cal read")
-	elif("Ongoing whitelist competitions:" in message or "Tracked Projects" in message):
+	if("Ongoing whitelist competitions:" in message or "Tracked Projects" in message):
 		if("Ongoing whitelist competitions:" in message):
+			
 			whitelists = update.message.text.split('\n')[1::]
 			string = "whitelist Ongoing competitions:\n\n\n"
 			count = 0
@@ -59,7 +60,7 @@ def MessageHandler(update, context):
 			setHtmlUrl(string)
 			f.close()
 			update.message.reply_text("I added it to our ongoing whitelist")
-		elif("Tracked Projects:" in message):
+		if("Tracked Projects:" in message):
 			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
 			string = trackedprojects[0].replace("Tracked Projects","Projects Tracked")
 			for i,n in enumerate(trackedprojects[1].split('members')[:len(trackedprojects[1].split('members'))-1:]):
@@ -77,7 +78,3 @@ def MessageHandler(update, context):
 			setHtmlCalUrl(string)
 			# global ONGOING_WHITELIST
 			update.message.reply_text("I added today's calendar")
-	elif("testing" in message):
-		f = open("html.txt","r")
-		update.message.reply_text(''.join(f.readlines()),parse_mode=ParseMode.HTML)
-		f.close()
