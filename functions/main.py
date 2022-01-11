@@ -28,7 +28,13 @@ def start(update, context):
 def guide(update, context):
 	typeChat = update.message.chat.type
 	if(typeChat=="group" or typeChat=="supergroup"):
-		update.message.reply_text('<a href="https://t.me/BscFetcherDevBot?start">Press here </a>',parse_mode=ParseMode.HTML)
+		# update.message.reply_text('<a href="https://t.me/BscFetcherDevBot?start">Press here </a>',parse_mode=ParseMode.HTML)
+		update.message.reply_text(
+		'Talk to me so I can explain you the guide',
+		reply_markup=InlineKeyboardMarkup([
+			[InlineKeyboardButton(text='Yalla kbeso', url='https://t.me/BscFetcherDevBot?start')],
+		])
+	)
 		
 def meme(update,context):
 	chatid = update['message']['chat']['id']
