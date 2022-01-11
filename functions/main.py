@@ -30,9 +30,9 @@ def guide(update, context):
 	if(typeChat=="group" or typeChat=="supergroup"):
 		# update.message.reply_text('<a href="https://t.me/BscFetcherDevBot?start">Press here </a>',parse_mode=ParseMode.HTML)
 		update.message.reply_text(
-		'Welcome to the group!',
+		'Talk to me so I can explain you the guide',
 		reply_markup=InlineKeyboardMarkup([
-			[InlineKeyboardButton(text='About us', url='https://t.me/BscFetcherDevBot?start')],
+			[InlineKeyboardButton(text='Yalla kbeso', url='https://t.me/BscFetcherDevBot?start')],
 		])
 	)
 		
