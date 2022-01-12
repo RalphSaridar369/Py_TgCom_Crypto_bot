@@ -21,4 +21,5 @@ def queryHandler(update, context):
 
         elif "chapter" in query[0]:
             choice = int(update.callback_query.data.split("_")[1])
-            context.bot.send_message(chat_id=iduser, text=dataAbout[choice-1])
+            context.bot.send_message(chat_id=iduser, text=dataAbout[choice-1],
+                parse_mode=telegram.ParseMode.MARKDOWN)
