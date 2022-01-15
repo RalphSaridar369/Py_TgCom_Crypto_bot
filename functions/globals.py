@@ -34,7 +34,7 @@ ABOUT_US_MESSAGE = """** Lebanese DeFi **\n\nWelcome to the group
 We are working on building a community
 La ne2dar kelna na3mol profits w nse3ed ba3ed at the end of the day
 From token whitelists to presales to launch dates to even NFTs.\n\n
-press on that link to get to know more about us: https://t.me/BscFetcherBot?start"""
+press on that link to get to know more about us: https://t.me/BscFetcherDevBot?start"""
 
 ShelfFile = shelve.open('shelf')
 ShelfFile['calendar'] = ""

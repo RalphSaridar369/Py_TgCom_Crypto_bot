@@ -1,9 +1,7 @@
 whitelist Ongoing competitions:
 
 
-<a href='https://t.me/safemoonomics'>SafeMoonomic </a>   10/01/22 | 16:00utc
 <a href='https://t.me/AnonyDoxxOfficial'>AnonyDoxx        </a>   10/01/22 | TBA
-<a href='https://t.me/SuperFlokiBsc'>SuperFlokiBsc  </a>   12/01/22 | 15:00utc
 <a href='https://t.me/everreflect'>EverReflect         </a>   17/01/22  | TBA
+<a href='https://t.me/BullEnergyToken'>BullEnergy          </a>   18/01/22 | TBA
 <a href='https://t.me/reflexfinanceOfficial'>ReflexFinance   </a>    02/02/22 | TBA
-<a href='https://t.me/SquidVerse3D'>squidverse3D    </a>          TBA
