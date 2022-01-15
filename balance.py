@@ -6,6 +6,7 @@ from functions.inlinequeryhandler import *
 from functions.messagehandler import *
 from functions.queryhandler import *
 from functions.whitelist import *
+from functions.poly import *
 from telegram import *
 import json
 import math
@@ -15,11 +16,13 @@ import shelve
 
 api_key_dev = "2121277949:AAGnsnht0fJVh_zrsybJdpuc9TgJn6YOo5c"
 api_key = "5079399379:AAFjP1KBQd7CIrgS2Mt8QSOMZjPWmb6Ovdw"
+
 print("Bot running in tg")
 
-updater = telegram.ext.Updater(api_key)
+updater = telegram.ext.Updater(api_key_dev)
 disp = updater.dispatcher
 disp.add_handler(telegram.ext.CommandHandler("start",start))
+disp.add_handler(telegram.ext.CommandHandler("startlist",startList))
 disp.add_handler(telegram.ext.CommandHandler("guide",guide))
 disp.add_handler(telegram.ext.CommandHandler("help",help))
 disp.add_handler(telegram.ext.CommandHandler("about",content))
