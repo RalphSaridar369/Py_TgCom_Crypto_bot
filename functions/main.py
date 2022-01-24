@@ -32,7 +32,7 @@ def guide(update, context):
 		update.message.reply_text(
 		'Talk to me so I can explain you the guide',
 		reply_markup=InlineKeyboardMarkup([
-			[InlineKeyboardButton(text='Yalla kbeso', url='https://t.me/BscFetcherDevBot?start')],
+			[InlineKeyboardButton(text='Yalla kbeso', url='https://t.me/DefiCommunityBot?start')],
 		])
 	)
 		
