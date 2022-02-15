@@ -13,12 +13,12 @@ import os
 import random
 import shelve
 
-api_key_dev = "2121277949:AAGnsnht0fJVh_zrsybJdpuc9TgJn6YOo5c"
+api_key_dev = "5253493673:AAEtPVURMWRW4m3I2s-lfIyXQfoCHi9wi54"
 api_key = "5141608151:AAHgvSJfTpDx5d-fTsUUNrjuvI_x4UKMEFA"
 
 print("Bot running in tg")
 
-updater = telegram.ext.Updater(api_key)
+updater = telegram.ext.Updater(api_key_dev)
 disp = updater.dispatcher
 disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("guide",guide))

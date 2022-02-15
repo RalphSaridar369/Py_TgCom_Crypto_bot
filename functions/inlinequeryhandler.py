@@ -30,6 +30,12 @@ def InlineQueryHandler(update, context):
 			input_message_content=InputTextMessageContent(getHtmlCalUrl(),parse_mode=ParseMode.HTML),
 			description="Shows calendar for the day"
 		),
+	InlineQueryResultArticle(
+            id = str(uuid4()),
+			title="Presales and Launches",
+			input_message_content=InputTextMessageContent(getHtmlPreUrl(),parse_mode=ParseMode.HTML),
+			description="Shows all presales and launches for the day"
+		),
 	])
 	
 

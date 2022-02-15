@@ -40,6 +40,7 @@ ShelfFile = shelve.open('shelf')
 ShelfFile['calendar'] = ""
 ShelfFile['whitelist_html'] = ""
 ShelfFile['calendar_html'] = ""
+ShelfFile['presale_html'] = ""
 CALENDAR = ShelfFile['calendar']
 
 def setHtmlUrl(value):
@@ -57,3 +58,11 @@ def setHtmlCalUrl(value):
 def getHtmlCalUrl():
 	print("Getting Shelf Data Calendar")
 	return ShelfFile['calendar_html']
+
+def setHtmlPreUrl(value):
+	print("Setting Shelf Data Presale")
+	ShelfFile['Presale_html'] = value
+
+def getHtmlPreUrl():
+	print("Getting Shelf Data Presale")
+	return ShelfFile['presale_html']

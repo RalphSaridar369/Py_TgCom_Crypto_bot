@@ -1,9 +1,8 @@
 whitelist Ongoing competitions:
 
 
-<a href='None'>@RetroNFTbabies       </a>   25/01/22
-<a href='None'>@Gunwar_en                 </a>   26/01/22 
-<a href='None'>@Dotpadann                 </a>   27/01/22
-<a href='None'>@Velerodao                   </a>   02/02/22
-<a href='None'>@ReflexFinance           </a>    02/02/22
+<a href='None'>@HyperAVAX                </a>   01/02/22
+<a href='None'>@Velerodao                   </a>   01/02/22
+<a href='None'>@Metacar_officiel        </a>   01/02/22
 <a href='None'>@AstroshitCoin            </a>   08/02/22
+<a href='None'>@Fota_groupchat        </a>   10/02/22

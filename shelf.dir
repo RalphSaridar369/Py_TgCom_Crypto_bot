@@ -1,3 +1,5 @@
 'calendar', (0, 15)
 'whitelist_html', (512, 15)
-'calendar_html', (1024, 15)
+'calendar_html', (2560, 15)
+'Presale_html', (4096, 290)
+'presale_html', (4608, 15)
