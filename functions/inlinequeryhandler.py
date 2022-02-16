@@ -17,6 +17,8 @@ def InlineQueryHandler(update, context):
 	# print("QUERY: "+str(update))
 		# chat = context.bot.get_chat()
 		# print("CHAT"+str(chat))
+	preData = getHtmlPreUrl()
+	print("data:",preData)
 	update.inline_query.answer([
 	InlineQueryResultArticle(
             id = str(uuid4()),
@@ -30,12 +32,12 @@ def InlineQueryHandler(update, context):
 			input_message_content=InputTextMessageContent(getHtmlCalUrl(),parse_mode=ParseMode.HTML),
 			description="Shows calendar for the day"
 		),
-	# InlineQueryResultArticle(
-    #         id = str(uuid4()),
-	# 		title="Presales and Launches",
-	# 		input_message_content=InputTextMessageContent(getHtmlPreUrl(),parse_mode=ParseMode.HTML),
-	# 		description="Shows all presales and launches for the day"
-	# 	)
+	InlineQueryResultArticle(
+            id = str(uuid4()),
+			title="Presales and Launches",
+			input_message_content=InputTextMessageContent(getHtmlPreUrl(),parse_mode=ParseMode.HTML),
+			description="Shows all presales and launches for the day"
+		)
 	])
 	
 
