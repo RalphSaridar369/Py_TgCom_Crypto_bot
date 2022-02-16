@@ -46,7 +46,7 @@ def MessageHandler(update, context):
 			f.close()
 			update.message.reply_text("I added it to our ongoing whitelist")
 		if("Tracked Projects:" in message):
-			print(update.message)
+			# print(update.message)
 			trackedprojects = update.message.text.split('Binance Smart Chain:\n')
 			string = trackedprojects[0].replace("Tracked Projects","Projects Tracked")
 			for i,n in enumerate(trackedprojects[1].split('members')[:len(trackedprojects[1].split('members'))-1:]):
@@ -60,13 +60,20 @@ def MessageHandler(update, context):
 		if("List of Presale and Launch:" in message):
 			presaleAndLaunches = update.message.text.split('List of Presale and Launch:')[1]
 			allPresales = presaleAndLaunches.split('@')
-			print("inside",allPresales)
-			print("update message:",update.message)
+			# print("inside",allPresales)
+			# print("update message:",update.message)
 			string = "List of Presale and launch:\n"
 			for i,n in enumerate(allPresales):
-				print(i,n)
+				# print(i,n)
 				url = n
-				string += "<a href='{}'>{}</a>".format(update.message.entities[i].url,"@"+url)
+				href=""
+				if(update.message.entities[i+1].url == None):
+					href=""
+				else:
+					href=update.message.entities[i+1].url
+				string += "<a href='{}'>{}</a>".format(href,"@"+url)
 				# print("ITEM",n)
+			print("END RESULT: ",string)
+			print("ENTITIES: ",update.message)
 			setHtmlPreUrl(string)
 			update.message.reply_text("I added today's presale and launch list")
