@@ -18,7 +18,7 @@ api_key = "5141608151:AAHgvSJfTpDx5d-fTsUUNrjuvI_x4UKMEFA"
 
 print("Bot running in tg")
 
-updater = telegram.ext.Updater(api_key_dev)
+updater = telegram.ext.Updater(api_key)
 disp = updater.dispatcher
 disp.add_handler(telegram.ext.CommandHandler("start",start))
 disp.add_handler(telegram.ext.CommandHandler("guide",guide))
