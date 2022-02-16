@@ -3,14 +3,14 @@ from functions.globals import *
 
 def InlineQueryHandler(update, context):
 	
-	query = update.inline_query.query
+	# query = update.inline_query.query
 	# calendar = getTodayCalendar(update,context,"context")
 	# print("Calendar:  "+str(calendar))
 	# whitelist = readToday(update,context,"context")
-	print("tsting")
-	global ONGOING_WHITELIST
-	global HTML_DATA_URL
-	wlRes = checkIfWhitelistExists()
+	# print("tsting")
+	# global ONGOING_WHITELIST
+	# global HTML_DATA_URL
+	# wlRes = checkIfWhitelistExists()
 	# global HTML_CALENDAR_DATA_URL
 	#if query == "":
 	#	return
@@ -35,7 +35,7 @@ def InlineQueryHandler(update, context):
 			title="Presales and Launches",
 			input_message_content=InputTextMessageContent(getHtmlPreUrl(),parse_mode=ParseMode.HTML),
 			description="Shows all presales and launches for the day"
-		),
+		)
 	])
 	
 
