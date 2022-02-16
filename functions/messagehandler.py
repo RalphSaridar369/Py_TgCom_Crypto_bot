@@ -73,7 +73,7 @@ def MessageHandler(update, context):
 					href=update.message.entities[i+1].url
 				string += "<a href='{}'>{}</a>".format(href,"@"+url)
 				# print("ITEM",n)
-			print("END RESULT: ",string)
-			print("ENTITIES: ",update.message)
+			# print("END RESULT: ",string)
+			# print("ENTITIES: ",update.message)
 			setHtmlPreUrl(string)
 			update.message.reply_text("I added today's presale and launch list")
