@@ -18,7 +18,6 @@ def InlineQueryHandler(update, context):
 		# chat = context.bot.get_chat()
 		# print("CHAT"+str(chat))
 	preData = getHtmlPreUrl()
-	print("data:",preData)
 	update.inline_query.answer([
 	InlineQueryResultArticle(
             id = str(uuid4()),
